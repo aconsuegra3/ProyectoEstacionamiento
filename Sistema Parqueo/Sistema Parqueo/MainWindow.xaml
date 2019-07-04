@@ -49,7 +49,7 @@
                         <Label FontFamily="Work Sans" Content="Numero de Matricula" HorizontalAlignment="Left" Margin="28,33,0,0" VerticalAlignment="Top"/>
                         <TextBox HorizontalAlignment="Left" Height="23" Margin="202,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
                         <Label FontFamily="Work Sans" Content="Tipo de Vehiculo" HorizontalAlignment="Left" Margin="32,91,0,0" VerticalAlignment="Top"/>
-                        <ComboBox HorizontalAlignment="Left" Margin="206,80,0,0" VerticalAlignment="Top" Width="162">
+                        <ComboBox Name="cmbTipoVehiculo" HorizontalAlignment="Left" Margin="206,80,0,0" VerticalAlignment="Top" Width="162">
                             <ComboBoxItem>Turismo</ComboBoxItem>
                             <ComboBoxItem>Pick-Up</ComboBoxItem>
                             <ComboBoxItem>Camioneta</ComboBoxItem>
