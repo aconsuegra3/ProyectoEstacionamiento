@@ -24,5 +24,10 @@ namespace Sistema_Parqueo
         {
             InitializeComponent();
         }
+
+        private void Salir(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
