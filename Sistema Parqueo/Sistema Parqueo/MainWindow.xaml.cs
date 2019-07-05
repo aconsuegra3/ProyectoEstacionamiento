@@ -27,7 +27,7 @@ namespace Sistema_Parqueo
         public MainWindow()
         {
             InitializeComponent();
-            cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+            cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
             MostrarVehiculosDentro();
         }
 

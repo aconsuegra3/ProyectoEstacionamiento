@@ -22,5 +22,16 @@ namespace Sistema_Parqueo.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LAPTOP-H5OOPDVV\\SQLEXPRESS;Initial Catalog=SistemaDeEstacionamiento;I" +
+            "ntegrated Security=True")]
+        public string SistemaDeEstacionamientoConnectionString {
+            get {
+                return ((string)(this["SistemaDeEstacionamientoConnectionString"]));
+            }
+        }
     }
 }

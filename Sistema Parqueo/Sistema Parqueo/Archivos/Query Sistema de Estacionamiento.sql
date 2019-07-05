@@ -32,7 +32,9 @@ GO
 CREATE TABLE Estacionamiento.HoraSalida (
 	HoraSalida DATETIME NOT NULL
 		CONSTRAINT PK_Estacionamiento_HoraSalida_HoraSalida PRIMARY KEY CLUSTERED,
-	PlacaVehiculo NVARCHAR(8) NOT NULL
+	PlacaVehiculo NVARCHAR(8) NOT NULL,
+	TotalTiempo INT NOT NULL,
+	Costo Decimal NOT NULL
 )
 GO
 -- Creamos la tabla reportes
@@ -63,6 +65,31 @@ ALTER TABLE Estacionamiento.HoraSalida
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION
 GO
+
+use SistemaDeEstacionamiento
+go
+
+CREATE TRIGGER	TR_Reporte
+ON Estacionamiento.HoraSalida INSTEAD OF DELETE
+AS
+begin
+DECLARE @Placa NVarchar(8)
+Select @Placa = Placa From Estacionamiento.Vehiculo  
+DECLARE @TipoVehiculo Varchar(20)
+Select @TipoVehiculo = TipoVehiculo From Estacionamiento.Vehiculo 
+DECLARE @HoraEntrada DateTime
+Select @HoraEntrada = HoraEntrada From Estacionamiento.HoraEntrada
+DECLARE @HoraSalida Datetime
+Select @HoraSalida = HoraSalida from deleted
+DECLARE @TiempoTotal INT
+Select @TiempoTotal = TiempoTotal from deleted
+DECLARE @costo decimal
+Select @Costo = Costo from deleted
+
+INSERT INTO Estacionamiento.Reporte VALUES(@Placa,@TipoVehiculo,@HoraEntrada,@HoraSalida,@TiempoTotal,@costo)
+
+end
+
 
 /*
 INSERT INTO Estacionamiento.Vehiculo
