@@ -29,5 +29,14 @@ namespace Sistema_Parqueo
         {
             Application.Current.Shutdown();
         }
+
+        private void Aceptar(object sender, RoutedEventArgs e)
+        {
+            ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
+            estacionamiento.Placa = txtPlaca.Text;
+            estacionamiento.TipoVehiculo = cmbTipoVehiculo.Text;
+            estacionamiento.InsertarVehiculo();
+
+        }
     }
 }
