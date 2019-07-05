@@ -12,7 +12,7 @@
         xmlns:local="clr-namespace:Sistema_Parqueo"
         mc:Ignorable="d"
                Title="MainWindow" Height="550" Width="850" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" >
-    <Grid Background="Azure">
+    <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <!--Barra de herramientas y area de trabajo-->
@@ -47,9 +47,9 @@
                     <Grid Grid.Row="1">
                         <!--Botones y combobox-->
                         <Label FontFamily="Work Sans" Content="Numero de Matricula" HorizontalAlignment="Left" Margin="28,33,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="txtPlaca" HorizontalAlignment="Left" Height="23" Margin="202,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                        <TextBox HorizontalAlignment="Left" Height="23" Margin="202,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
                         <Label FontFamily="Work Sans" Content="Tipo de Vehiculo" HorizontalAlignment="Left" Margin="32,91,0,0" VerticalAlignment="Top"/>
-                        <ComboBox x:Name="cmbTipoVehiculo" HorizontalAlignment="Left" Margin="206,80,0,0" VerticalAlignment="Top" Width="162">
+                        <ComboBox Name="cmbTipoVehiculo" HorizontalAlignment="Left" Margin="206,80,0,0" VerticalAlignment="Top" Width="162">
                             <ComboBoxItem>Turismo</ComboBoxItem>
                             <ComboBoxItem>Pick-Up</ComboBoxItem>
                             <ComboBoxItem>Camioneta</ComboBoxItem>
@@ -59,7 +59,7 @@
                             <ComboBoxItem>Mocicleta</ComboBoxItem>
                             <ComboBoxItem>Otros</ComboBoxItem>
                         </ComboBox>
-                        <Button x:Name="btnAceptar" Background="#F9AA33" Foreground="Black" Content="Aceptar" HorizontalAlignment="Left" Margin="89,151,0,0" VerticalAlignment="Top" Width="91" Height="33" Click="Aceptar"/>
+                        <Button Background="#F9AA33" Foreground="Black" Content="Aceptar" HorizontalAlignment="Left" Margin="89,151,0,0" VerticalAlignment="Top" Width="91" Height="33"/>
                         <Button Background="#F9AA33" Foreground="Black" Content="Cancelar" HorizontalAlignment="Left" Margin="249,151,0,0" VerticalAlignment="Top" Width="91" Height="33"/>
 
 
