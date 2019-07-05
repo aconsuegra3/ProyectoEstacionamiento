@@ -67,7 +67,7 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <!--Muestra los datos-->
-
+                        <ListBox Name="lbVehiculosDentro" Margin="5"/>
                     </Grid>
 
                 </Grid>

@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Sistema_Parqueo
 {
@@ -20,9 +23,12 @@ namespace Sistema_Parqueo
     /// </summary>
     public partial class MainWindow : Window
     {
+        SqlConnection cn;
         public MainWindow()
         {
             InitializeComponent();
+            cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+            MostrarVehiculosDentro();
         }
 
         private void Salir(object sender, RoutedEventArgs e)
@@ -43,6 +49,43 @@ namespace Sistema_Parqueo
         {
             txtPlaca.Clear();
             cmbTipoVehiculo.SelectedIndex = -1;
+        }
+
+        // Método para mostrar los vehículos dentro del estacionamiento
+        private void MostrarVehiculosDentro()
+        {
+            try
+            {
+                // Query para consultar los vehiculos con su hora de entrada
+                string query = @"SELECT v.Placa, v.TipoVehiculo, he.HoraEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.HoraEntrada he
+                                ON v.Placa = he.PlacaVehiculo";
+
+                // Comando para el query
+                SqlCommand sqlCommand = new SqlCommand(query, cn);
+
+                // Adaptador para realizar el comando del query
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+
+                using (sqlDataAdapter)
+                {
+                    // Creamos la DataTable para mostrar en pantalla
+                    DataTable tablaVehiculosDentro = new DataTable();
+
+                    // Llenar el objeto de tipo DataTable
+                    sqlDataAdapter.Fill(tablaVehiculosDentro);
+
+                    lbVehiculosDentro.DisplayMemberPath = "Placa";
+
+                    lbVehiculosDentro.SelectedValuePath = "Placa";
+
+                    lbVehiculosDentro.ItemsSource = tablaVehiculosDentro.DefaultView;
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Sistema_Parqueo
     {
         private string placa;
         private string tipoVehiculo;
-        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
      public ClassEstacionamiento()
         {
             placa = "PorDefecto";
@@ -119,11 +119,9 @@ namespace Sistema_Parqueo
                 MessageBox.Show("El vehiculo no conside con la placa registrada");
             }
 
-            }
-            
-
-
-
         }
+
+
+    }
     }
 
