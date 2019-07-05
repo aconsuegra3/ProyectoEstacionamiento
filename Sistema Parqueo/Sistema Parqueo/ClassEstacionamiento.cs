@@ -31,34 +31,99 @@ namespace Sistema_Parqueo
             set {tipoVehiculo= value;}
         }
 
+        //Valida si la placa existe o se debe insertar
+        public Boolean Validar()
+        {
+            cn.Open();
+            string query = "SELECT COUNT(*) FROM Estacionamiento.Vehiculo WHERE Placa=@placa";
+            SqlCommand comando = new SqlCommand(query, cn);
+            comando.Parameters.AddWithValue("@placa", Placa);
+
+            int cant = Convert.ToInt32(comando.ExecuteScalar());
+            cn.Close();
+            if (cant == 0)
+            {
+                return false;
+
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        //Valida si el vehiculo es igual a la placa 
+        public Boolean ValidarVehiculo()
+        {
+            cn.Open();
+            string query = "SELECT COUNT(*) FROM Estacionamiento.Vehiculo WHERE Placa=@placa AND TipoVehiculo=@tipo";
+            SqlCommand comando = new SqlCommand(query, cn);
+            comando.Parameters.AddWithValue("@placa", Placa);
+            comando.Parameters.AddWithValue("@tipo", TipoVehiculo);
+            int cant = Convert.ToInt32(comando.ExecuteScalar());
+            cn.Close();
+            if (cant == 0)
+            {
+                return false;
+
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        //Insertar vehiculo a la base de datos
         public void InsertarVehiculo()
         {
-            try
-            {
-                cn.Open();
-                string query = "INSERT INTO Estacionamiento.Vehiculo VALUES (@placa,@tipovehiculo)";
-                SqlCommand comando = new SqlCommand(query, cn);
-                comando.Parameters.AddWithValue("@placa", Placa);
-                comando.Parameters.AddWithValue("@tipovehiculo", TipoVehiculo);
-                comando.ExecuteNonQuery();
-                MessageBox.Show("El vehiculo se ha agregado");
+           //Si la placa no existe se guarda en la base de datos
+                if (Validar() == false)
+                {
+                try
+                {
+                    cn.Open();
+                    string query = "INSERT INTO Estacionamiento.Vehiculo VALUES (@placa,@tipovehiculo)";
+                    SqlCommand comando = new SqlCommand(query, cn);
+                    comando.Parameters.AddWithValue("@placa", Placa);
+                    comando.Parameters.AddWithValue("@tipovehiculo", TipoVehiculo);
+                    comando.ExecuteNonQuery();
+                    MessageBox.Show("El vehiculo se ha agregado");
+                    cn.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
-            catch (Exception ex)
+
+            //Luego se pasa a guardar el ingreso del vehiculo
+            if (ValidarVehiculo() == true)
             {
-                MessageBox.Show( ex.ToString());
+                try
+                {
+                    cn.Open();
+                    string query = "INSERT INTO Estacionamiento.HoraEntrada VALUES(GETDATE(), @placa)";
+                    SqlCommand comando = new SqlCommand(query, cn);
+                    comando.Parameters.AddWithValue("@placa", Placa);
+                    comando.ExecuteNonQuery();
+                    MessageBox.Show("Bienvenido");
+                    cn.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ha ocurrido un error" + ex.ToString());
+                }
             }
-            finally
+            else
             {
-                cn.Close();
+                MessageBox.Show("El vehiculo no conside con la placa registrada");
             }
+
+            }
+            
 
 
 
         }
-
-
-
-
-
     }
-}
+

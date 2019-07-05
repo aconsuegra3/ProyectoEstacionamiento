@@ -38,5 +38,11 @@ namespace Sistema_Parqueo
             estacionamiento.InsertarVehiculo();
 
         }
+
+        private void Cancelar(object sender, RoutedEventArgs e)
+        {
+            txtPlaca.Clear();
+            cmbTipoVehiculo.SelectedIndex = -1;
+        }
     }
 }
