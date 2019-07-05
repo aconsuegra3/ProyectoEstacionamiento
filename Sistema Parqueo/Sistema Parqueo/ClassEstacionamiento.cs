@@ -14,12 +14,12 @@ namespace Sistema_Parqueo
         private string placa;
         private string tipoVehiculo;
         SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
-     public ClassEstacionamiento()
+        public ClassEstacionamiento()
         {
             placa = "PorDefecto";
             tipoVehiculo = "PorDefecto";
         }
-        
+
         public string Placa
         {
             get { return placa; }
@@ -27,8 +27,8 @@ namespace Sistema_Parqueo
         }
         public string TipoVehiculo
         {
-            get {return tipoVehiculo;}
-            set {tipoVehiculo= value;}
+            get { return tipoVehiculo; }
+            set { tipoVehiculo = value; }
         }
 
         //Valida si la placa existe o se debe insertar
@@ -76,9 +76,9 @@ namespace Sistema_Parqueo
         //Insertar vehiculo a la base de datos
         public void InsertarVehiculo()
         {
-           //Si la placa no existe se guarda en la base de datos
-                if (Validar() == false)
-                {
+            //Si la placa no existe se guarda en la base de datos
+            if (Validar() == false)
+            {
                 try
                 {
                     cn.Open();
@@ -120,8 +120,6 @@ namespace Sistema_Parqueo
             }
 
         }
-
-
     }
     }
 

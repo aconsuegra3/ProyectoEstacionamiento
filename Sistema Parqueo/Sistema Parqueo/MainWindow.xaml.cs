@@ -87,5 +87,46 @@ namespace Sistema_Parqueo
                 MessageBox.Show(e.ToString());
             }
         }
+
+        private void BtnBuscarPlaca_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtBuscarPlaca.Text == string.Empty)
+            {
+                MessageBox.Show("Debe ingresar una placa en la caja de texto.");
+                txtBuscarPlaca.Focus();
+            }
+            try
+            {
+                // Query para consultar
+                string query = @"SELECT v.Placa, v.TipoVehiculo, he.HoraEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.HoraEntrada he
+                                ON v.Placa = he.PlacaVehiculo WHERE v.Placa = @PlacaV";
+
+                SqlCommand sqlCommand = new SqlCommand(query, cn);
+
+                // SqlDataAdapter es una interfaz entre las tablas y los objetos utilizables en C#
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+
+                using (sqlDataAdapter)
+                {
+                    sqlCommand.Parameters.AddWithValue("@PlacaV", txtBuscarPlaca.Text);
+
+                    // Objecto en C# que refleja una tabla de una BD
+                    DataTable tablaVehiculos = new DataTable();
+
+                    // Llenar el objeto de tipo DataTable
+                    sqlDataAdapter.Fill(tablaVehiculos);
+               
+                    lbBuscarPlaca.DisplayMemberPath = "HoraEntrada";
+                    
+                    lbBuscarPlaca.SelectedValuePath = "Placa";
+                    
+                    lbBuscarPlaca.ItemsSource = tablaVehiculos.DefaultView;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }

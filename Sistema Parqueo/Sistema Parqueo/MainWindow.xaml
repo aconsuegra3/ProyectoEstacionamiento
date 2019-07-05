@@ -78,6 +78,7 @@
                     <Grid.RowDefinitions>
                         <!--Definicion de filas-->
                         <RowDefinition Height="50"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="150"/>
                     </Grid.RowDefinitions>
@@ -86,11 +87,13 @@
                     </Grid>
                     <Grid Grid.Row="1">
                         <Label FontFamily="Work Sans" Content="Buscar Placa:" HorizontalAlignment="Left" Margin="28,24,0,0" VerticalAlignment="Top"/>
-                        <TextBox HorizontalAlignment="Left" Height="23" Margin="124,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
-                        <Button Background="#F9AA33" Foreground="Black" Content="Buscar" HorizontalAlignment="Left" Margin="299,24,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
-
+                        <TextBox Name="txtBuscarPlaca" HorizontalAlignment="Left" Height="23" Margin="124,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                        <Button Name="btnBuscarPlaca" Background="#F9AA33" Foreground="Black" Content="Buscar" HorizontalAlignment="Left" Margin="299,24,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="BtnBuscarPlaca_Click"/>
                     </Grid>
                     <Grid Grid.Row="2">
+                        <ListBox Name="lbBuscarPlaca" Margin="5"/>
+                    </Grid>
+                    <Grid Grid.Row="3">
                         <Button Background="#F9AA33" Foreground="Black" Content="Pagar" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
                         <Button Background="#F9AA33" Foreground="Black" Content="Actualizar" HorizontalAlignment="Left" Margin="71,61,0,0" VerticalAlignment="Top" Width="89" Height="29" RenderTransformOrigin="0.479,0.497"/>
                         <Button Background="#F9AA33" Foreground="Black" Content="Reporte" HorizontalAlignment="Left" Margin="266,10,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
