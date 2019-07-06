@@ -23,12 +23,13 @@ namespace Sistema_Parqueo
     /// </summary>
     public partial class MainWindow : Window
     {
-        SqlConnection cn;
+        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+
         public MainWindow()
         {
             InitializeComponent();
-            cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
-            MostrarVehiculosDentro();
+            this.dtgrid.ItemsSource = MostrarEntrada();
+            //MostrarVehiculosDentro();
         }
 
         private void Salir(object sender, RoutedEventArgs e)
@@ -39,10 +40,23 @@ namespace Sistema_Parqueo
         private void Aceptar(object sender, RoutedEventArgs e)
         {
             ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-            estacionamiento.Placa = txtPlaca.Text;
-            estacionamiento.TipoVehiculo = cmbTipoVehiculo.Text;
-            estacionamiento.InsertarVehiculo();
+            if (txtPlaca.Text.Equals("") == false )
+            {
 
+                estacionamiento.Placa = txtPlaca.Text;
+                estacionamiento.TipoVehiculo = cmbTipoVehiculo.Text;
+                estacionamiento.InsertarVehiculo();
+                txtPlaca.Clear();
+                cmbTipoVehiculo.SelectedIndex = -1;
+                txtPlaca.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Ingrese todos los datos");
+                txtPlaca.Clear();
+                cmbTipoVehiculo.SelectedIndex = -1;
+                txtPlaca.Focus();
+            }
         }
 
         private void Cancelar(object sender, RoutedEventArgs e)
@@ -50,44 +64,7 @@ namespace Sistema_Parqueo
             txtPlaca.Clear();
             cmbTipoVehiculo.SelectedIndex = -1;
         }
-
-        // Método para mostrar los vehículos dentro del estacionamiento
-        private void MostrarVehiculosDentro()
-        {
-            try
-            {
-                // Query para consultar los vehiculos con su hora de entrada
-                string query = @"SELECT v.Placa, v.TipoVehiculo, he.HoraEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.HoraEntrada he
-                                ON v.Placa = he.PlacaVehiculo";
-
-                // Comando para el query
-                SqlCommand sqlCommand = new SqlCommand(query, cn);
-
-                // Adaptador para realizar el comando del query
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
-
-                using (sqlDataAdapter)
-                {
-                    // Creamos la DataTable para mostrar en pantalla
-                    DataTable tablaVehiculosDentro = new DataTable();
-
-                    // Llenar el objeto de tipo DataTable
-                    sqlDataAdapter.Fill(tablaVehiculosDentro);
-
-                    lbVehiculosDentro.DisplayMemberPath = "Placa";
-
-                    lbVehiculosDentro.SelectedValuePath = "Placa";
-
-                    lbVehiculosDentro.ItemsSource = tablaVehiculosDentro.DefaultView;
-                }
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-        }
-
+        
         private void BtnBuscarPlaca_Click(object sender, RoutedEventArgs e)
         {
             if (txtBuscarPlaca.Text == string.Empty)
@@ -128,5 +105,84 @@ namespace Sistema_Parqueo
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        // Creacion de la lista mostrar
+        private List<ClassEstacionamiento> MostrarEntrada()
+        {
+            cn.Open();
+            String query = @"SELECT Placa,TipoVehiculo,HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.HoraEntrada he
+                                ON Placa = he.PlacaVehiculo WHERE Placa = Placa";
+            SqlCommand comando = new SqlCommand(query, cn);
+            List<ClassEstacionamiento> Lista = new List<ClassEstacionamiento>();
+            SqlDataReader reder = comando.ExecuteReader();
+
+            while (reder.Read())
+            {
+                ClassEstacionamiento dato = new ClassEstacionamiento();
+                dato.HoraEntrada = reder.GetDateTime(2);
+                dato.Placa = reder.GetString(0);
+                dato.TipoVehiculo = reder.GetString(1);
+                Lista.Add(dato);
+            }
+            reder.Close();
+            cn.Close();
+            return Lista;
+
+        }
+
+        //Mostar los datos en el dataGrid
+        private void Dtgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MainWindow listar = new MainWindow();
+            listar.Show();
+            }
+
+        //Boton de actualizar
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow listar = new MainWindow();
+            listar.Show();
+        }
     }
 }
+
+
+
+/*
+        // Método para mostrar los vehículos dentro del estacionamiento
+        private void MostrarVehiculosDentro()
+        {
+            try
+            {
+                // Query para consultar los vehiculos con su hora de entrada
+                string query = @"SELECT v.Placa, v.TipoVehiculo, he.HoraEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.HoraEntrada he
+                                ON v.Placa = he.PlacaVehiculo";
+
+                // Comando para el query
+                SqlCommand sqlCommand = new SqlCommand(query, cn);
+
+                // Adaptador para realizar el comando del query
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+
+                using (sqlDataAdapter)
+                {
+                    // Creamos la DataTable para mostrar en pantalla
+                    DataTable tablaVehiculosDentro = new DataTable();
+
+                    // Llenar el objeto de tipo DataTable
+                    sqlDataAdapter.Fill(tablaVehiculosDentro);
+
+                    lbVehiculosDentro.DisplayMemberPath = "Placa";
+
+                    lbVehiculosDentro.SelectedValuePath = "Placa";
+
+                    lbVehiculosDentro.ItemsSource = tablaVehiculosDentro.DefaultView;
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+        }
+        */

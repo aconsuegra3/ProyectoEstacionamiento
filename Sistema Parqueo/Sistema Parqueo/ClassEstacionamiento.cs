@@ -11,6 +11,7 @@ namespace Sistema_Parqueo
 {
     class ClassEstacionamiento
     {
+        private DateTime horaEntrada;
         private string placa;
         private string tipoVehiculo;
         SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
@@ -29,6 +30,11 @@ namespace Sistema_Parqueo
         {
             get { return tipoVehiculo; }
             set { tipoVehiculo = value; }
+        }
+        public DateTime HoraEntrada
+        {
+            get { return horaEntrada; }
+            set { horaEntrada = value; }
         }
 
         //Valida si la placa existe o se debe insertar
@@ -109,9 +115,9 @@ namespace Sistema_Parqueo
                     MessageBox.Show("Bienvenido");
                     cn.Close();
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
-                    MessageBox.Show("Ha ocurrido un error" + ex.ToString());
+                    MessageBox.Show("El vehiculo aun esta en el estacionamiento");
                 }
             }
             else
@@ -120,6 +126,29 @@ namespace Sistema_Parqueo
             }
 
         }
+        /*
+        public  List<ClassEstacionamiento> MostrarEntrada()
+        {
+
+
+            cn.Open();
+            String query = "Select * From Estacionamiento.HoraEntrada";
+            SqlCommand comando = new SqlCommand(query, cn);
+            List<ClassEstacionamiento> Lista = new List<ClassEstacionamiento>();
+            SqlDataReader reder = comando.ExecuteReader();
+
+            while (reder.Read()){
+                ClassEstacionamiento dato = new ClassEstacionamiento();
+                dato.HoraEntrada = reder.GetString(0);
+                dato.TipoVehiculo = reder.GetString(1);
+                Lista.Add(dato);
+            }
+            reder.Close();
+            cn.Close();
+            return Lista;
+            
+        }
+        */
     }
     }
 

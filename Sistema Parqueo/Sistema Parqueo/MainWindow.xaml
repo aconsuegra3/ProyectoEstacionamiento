@@ -38,7 +38,7 @@
                         <!--Definicion de filas Grid0-->
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="280"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <!--Grid Titulo-->
@@ -66,8 +66,9 @@
 
                     </Grid>
                     <Grid Grid.Row="2">
+                        <DataGrid Name="dtgrid" Background="Gray" Margin="10,10,10,61" SelectionChanged="Dtgrid_SelectionChanged" />
+                        <Button Content="Actualizar" Foreground="Black" Background="#F9AA33" Margin="158,233,165,19" Height="Auto" Click="Button_Click" />
                         <!--Muestra los datos-->
-                        <ListBox Name="lbVehiculosDentro" Margin="5"/>
                     </Grid>
 
                 </Grid>
@@ -94,10 +95,10 @@
                         <ListBox Name="lbBuscarPlaca" Margin="5"/>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <Button Background="#F9AA33" Foreground="Black" Content="Pagar" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
-                        <Button Background="#F9AA33" Foreground="Black" Content="Actualizar" HorizontalAlignment="Left" Margin="71,61,0,0" VerticalAlignment="Top" Width="89" Height="29" RenderTransformOrigin="0.479,0.497"/>
-                        <Button Background="#F9AA33" Foreground="Black" Content="Reporte" HorizontalAlignment="Left" Margin="266,10,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
-                        <Button Background="#F9AA33" Foreground="Black" Content="Cancelar" HorizontalAlignment="Left" Margin="266,61,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
+                        <Button Background="#F9AA33" Foreground="Black" Content="Pagar" HorizontalAlignment="Left" Margin="65,61,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
+                        <Button Background="#F9AA33" Foreground="Black" Content="Actualizar" HorizontalAlignment="Left" Margin="65,10,0,0" VerticalAlignment="Top" Width="89" Height="29" RenderTransformOrigin="0.479,0.497"/>
+                        <Button Background="#F9AA33" Foreground="Black" Content="Reporte" HorizontalAlignment="Left" Margin="264,61,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
+                        <Button Background="#F9AA33" Foreground="Black" Content="Cancelar" HorizontalAlignment="Left" Margin="264,10,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
 
                     </Grid>
                 </Grid>
