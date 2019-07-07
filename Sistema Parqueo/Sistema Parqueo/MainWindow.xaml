@@ -50,14 +50,14 @@
                         <TextBox Name="txtPlaca" HorizontalAlignment="Left" Height="23" Margin="202,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
                         <Label FontFamily="Work Sans" Content="Tipo de Vehiculo" HorizontalAlignment="Left" Margin="32,91,0,0" VerticalAlignment="Top"/>
                         <ComboBox Name="cmbTipoVehiculo" HorizontalAlignment="Left" Margin="206,80,0,0" VerticalAlignment="Top" Width="162">
-                            <ComboBoxItem>Turismo</ComboBoxItem>
-                            <ComboBoxItem>Pick-Up</ComboBoxItem>
-                            <ComboBoxItem>Camioneta</ComboBoxItem>
-                            <ComboBoxItem>Camion</ComboBoxItem>
-                            <ComboBoxItem>Bus</ComboBoxItem>
-                            <ComboBoxItem>Rastra</ComboBoxItem>
-                            <ComboBoxItem>Mocicleta</ComboBoxItem>
-                            <ComboBoxItem>Otros</ComboBoxItem>
+                            <ComboBoxItem Name="Turismo">Turismo</ComboBoxItem>
+                            <ComboBoxItem Name="PickUp">Pick-Up</ComboBoxItem>
+                            <ComboBoxItem Name="Camioneta">Camioneta</ComboBoxItem>
+                            <ComboBoxItem Name="Camion">Camion</ComboBoxItem>
+                            <ComboBoxItem Name="Bus">Bus</ComboBoxItem>
+                            <ComboBoxItem Name="Rastra">Rastra</ComboBoxItem>
+                            <ComboBoxItem Name="Motocicleta">Mocicleta</ComboBoxItem>
+                            <ComboBoxItem Name="Otros">Otros</ComboBoxItem>
                         </ComboBox>
                         <Button Name="btnSalir" Background="#F9AA33" Foreground="Black" Content="Aceptar" HorizontalAlignment="Left" Margin="89,151,0,0" VerticalAlignment="Top" Width="91" Height="33" Click="Aceptar"/>
                         <Button x:Name="btnCancelar" Background="#F9AA33" Foreground="Black" Content="Cancelar" HorizontalAlignment="Left" Margin="249,151,0,0" VerticalAlignment="Top" Width="91" Height="33" Click="Cancelar"/>
@@ -95,10 +95,10 @@
                         <DataGrid Name="dtgridBuscar" Background="Gray" Margin="10,10,10,61" SelectionChanged="Dtgrid_SelectionChangedBuscar" />
                     </Grid>
                     <Grid Grid.Row="3">
-                        <Button Background="#F9AA33" Foreground="Black" Content="Pagar" HorizontalAlignment="Left" Margin="65,61,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
-                        <Button Background="#F9AA33" Foreground="Black" Content="Actualizar" HorizontalAlignment="Left" Margin="65,10,0,0" VerticalAlignment="Top" Width="89" Height="29" RenderTransformOrigin="0.479,0.497"/>
-                        <Button Background="#F9AA33" Foreground="Black" Content="Reporte" HorizontalAlignment="Left" Margin="264,61,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
-                        <Button Background="#F9AA33" Foreground="Black" Content="Cancelar" HorizontalAlignment="Left" Margin="264,10,0,0" VerticalAlignment="Top" Width="89" Height="29"/>
+                        <Button Name="btnPagar" Background="#F9AA33" Foreground="Black" Content="Pagar" HorizontalAlignment="Left" Margin="65,61,0,0" VerticalAlignment="Top" Width="100" Height="29" Click="BtnPagar_Click"/>
+                        <Button Name="btnActualizar" Background="#F9AA33" Foreground="Black" Content="Actualizar" HorizontalAlignment="Left" Margin="65,10,0,0" VerticalAlignment="Top" Width="100" Height="29" RenderTransformOrigin="0.479,0.497" Click="BtnActualizarBusqueda_Click"/>
+                        <Button Name="btnReporte" Background="#F9AA33" Foreground="Black" Content="Reporte" HorizontalAlignment="Left" Margin="264,61,0,0" VerticalAlignment="Top" Width="100" Height="29" Click="BtnReporte_Click"/>
+                        <Button Name="btnCancelarBuscar" Background="#F9AA33" Foreground="Black" Content="Cancelar" HorizontalAlignment="Left" Margin="264,10,0,0" VerticalAlignment="Top" Width="100" Height="29" Click="BtnCancelarBuscar_Click"/>
 
                     </Grid>
                 </Grid>

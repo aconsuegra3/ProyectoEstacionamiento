@@ -65,6 +65,7 @@ namespace Sistema_Parqueo
         {
             txtPlaca.Clear();
             cmbTipoVehiculo.SelectedIndex = -1;
+            txtPlaca.Focus();
         }
 
         //private void BtnBuscarPlaca_Click(object sender, RoutedEventArgs e)
@@ -186,6 +187,30 @@ namespace Sistema_Parqueo
         {
             MainWindow listar = new MainWindow();
             listar.Show();
+        }
+
+        private void BtnReporte_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnActualizarBusqueda_Click(object sender, RoutedEventArgs e)
+        {
+            this.dtgridBuscar.ItemsSource = BuscarPlaca();
+        }
+
+        private void BtnPagar_Click(object sender, RoutedEventArgs e)
+        {
+            if (cmbTipoVehiculo.TabIndex == 1)
+            {
+
+            }
+        }
+
+        private void BtnCancelarBuscar_Click(object sender, RoutedEventArgs e)
+        {
+            txtBuscarPlaca.Text = String.Empty;
+            txtBuscarPlaca.Focus();
         }
     }
 }
