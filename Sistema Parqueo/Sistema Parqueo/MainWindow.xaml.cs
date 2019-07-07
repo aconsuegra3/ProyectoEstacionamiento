@@ -23,12 +23,14 @@ namespace Sistema_Parqueo
     /// </summary>
     public partial class MainWindow : Window
     {
-        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
 
         public MainWindow()
         {
             InitializeComponent();
             this.dtgrid.ItemsSource = MostrarEntrada();
+            
+
             //MostrarVehiculosDentro();
         }
 
@@ -64,46 +66,77 @@ namespace Sistema_Parqueo
             txtPlaca.Clear();
             cmbTipoVehiculo.SelectedIndex = -1;
         }
-        
-        private void BtnBuscarPlaca_Click(object sender, RoutedEventArgs e)
+
+        //private void BtnBuscarPlaca_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (txtBuscarPlaca.Text == string.Empty)
+        //    {
+        //        MessageBox.Show("Debe ingresar una placa en la caja de texto.");
+        //        txtBuscarPlaca.Focus();
+        //    }
+        //    try
+        //    {
+        //        // Query para consultar
+        //        string query = @"SELECT v.Placa, v.TipoVehiculo, he.HoraEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.HoraEntrada he
+        //                        ON v.Placa = he.PlacaVehiculo WHERE v.Placa = @PlacaV";
+
+        //        SqlCommand sqlCommand = new SqlCommand(query, cn);
+
+        //        // SqlDataAdapter es una interfaz entre las tablas y los objetos utilizables en C#
+        //        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+
+        //        using (sqlDataAdapter)
+        //        {
+        //            sqlCommand.Parameters.AddWithValue("@PlacaV", txtBuscarPlaca.Text);
+
+        //            // Objecto en C# que refleja una tabla de una BD
+        //            DataTable tablaVehiculos = new DataTable();
+
+        //            // Llenar el objeto de tipo DataTable
+        //            sqlDataAdapter.Fill(tablaVehiculos);
+
+        //            //lbBuscarPlaca.DisplayMemberPath = "HoraEntrada";
+
+        //            //lbBuscarPlaca.SelectedValuePath = "Placa";
+
+        //            //lbBuscarPlaca.ItemsSource = tablaVehiculos.DefaultView;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.ToString());
+        //    }
+        //}
+
+        private List<ClassEstacionamiento> BuscarPlaca()
         {
-            if (txtBuscarPlaca.Text == string.Empty)
-            {
-                MessageBox.Show("Debe ingresar una placa en la caja de texto.");
-                txtBuscarPlaca.Focus();
-            }
-            try
-            {
-                // Query para consultar
-                string query = @"SELECT v.Placa, v.TipoVehiculo, he.HoraEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.HoraEntrada he
-                                ON v.Placa = he.PlacaVehiculo WHERE v.Placa = @PlacaV";
+                cn.Open();
+                String query = @"SELECT Placa,TipoVehiculo,HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.HoraEntrada he
+                                ON Placa = he.PlacaVehiculo WHERE Placa = @PlacaV";
+                SqlCommand comando = new SqlCommand(query, cn);
+                List<ClassEstacionamiento> Lista = new List<ClassEstacionamiento>();
+                SqlDataReader reder = comando.ExecuteReader();
 
-                SqlCommand sqlCommand = new SqlCommand(query, cn);
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(comando);
 
-                // SqlDataAdapter es una interfaz entre las tablas y los objetos utilizables en C#
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
 
                 using (sqlDataAdapter)
                 {
-                    sqlCommand.Parameters.AddWithValue("@PlacaV", txtBuscarPlaca.Text);
+                    comando.Parameters.AddWithValue("@PlacaV", txtBuscarPlaca.Text);
 
-                    // Objecto en C# que refleja una tabla de una BD
-                    DataTable tablaVehiculos = new DataTable();
+                    while (reder.Read())
+                    {
+                        ClassEstacionamiento dato = new ClassEstacionamiento();
+                        dato.HoraEntrada = reder.GetDateTime(2);
+                        dato.Placa = reder.GetString(0);
+                        dato.TipoVehiculo = reder.GetString(1);
+                        Lista.Add(dato);
+                    }
+                    reder.Close();
+                cn.Close();
+                return Lista;
 
-                    // Llenar el objeto de tipo DataTable
-                    sqlDataAdapter.Fill(tablaVehiculos);
-               
-                    lbBuscarPlaca.DisplayMemberPath = "HoraEntrada";
-                    
-                    lbBuscarPlaca.SelectedValuePath = "Placa";
-                    
-                    lbBuscarPlaca.ItemsSource = tablaVehiculos.DefaultView;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            }      
         }
 
         // Creacion de la lista mostrar
@@ -135,7 +168,18 @@ namespace Sistema_Parqueo
         {
             MainWindow listar = new MainWindow();
             listar.Show();
-            }
+        }
+
+        private void Dtgrid_SelectionChangedBuscar(object sender, SelectionChangedEventArgs e)
+        {
+            MainWindow listarBusqueda = new MainWindow();
+            listarBusqueda.Show();
+        }
+
+        private void BtnBuscarPlaca_Click(object sender, RoutedEventArgs e)
+        {
+            this.dtgridBuscar.ItemsSource = BuscarPlaca();
+        }
 
         //Boton de actualizar
         private void Button_Click(object sender, RoutedEventArgs e)

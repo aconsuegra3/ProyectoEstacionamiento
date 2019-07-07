@@ -14,7 +14,7 @@ namespace Sistema_Parqueo
         private DateTime horaEntrada;
         private string placa;
         private string tipoVehiculo;
-        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
         public ClassEstacionamiento()
         {
             placa = "PorDefecto";
@@ -94,11 +94,15 @@ namespace Sistema_Parqueo
                     comando.Parameters.AddWithValue("@tipovehiculo", TipoVehiculo);
                     comando.ExecuteNonQuery();
                     MessageBox.Show("El vehiculo se ha agregado");
-                    cn.Close();
+                    
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
+                }
+                finally
+                {
+                    cn.Close();
                 }
             }
 
@@ -112,7 +116,7 @@ namespace Sistema_Parqueo
                     SqlCommand comando = new SqlCommand(query, cn);
                     comando.Parameters.AddWithValue("@placa", Placa);
                     comando.ExecuteNonQuery();
-                    MessageBox.Show("Bienvenido");
+                    //MessageBox.Show("Bienvenido");
                     cn.Close();
                 }
                 catch (Exception )
