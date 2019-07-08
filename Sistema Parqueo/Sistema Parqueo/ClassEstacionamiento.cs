@@ -14,7 +14,7 @@ namespace Sistema_Parqueo
         private DateTime horaEntrada;
         private string placa;
         private string tipoVehiculo;
-        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
         public ClassEstacionamiento()
         {
             placa = "PorDefecto";
