@@ -20,23 +20,19 @@ CREATE TABLE Estacionamiento.Vehiculo (
 	TipoVehiculo VARCHAR(20) NOT NULL,
 )
 
--- Creación de la tabla Hora de Entrada
-CREATE TABLE Estacionamiento.HoraEntrada (
-	HoraEntrada DATETIME NOT NULL
-		CONSTRAINT PK_Estacionamiento_HoraEntrada_HoraEntrada PRIMARY KEY CLUSTERED,
-	PlacaVehiculo NVARCHAR(8) NOT NULL
+
+--Creacion tabla detalle---
+
+CREATE TABLE Estacionamiento.Detalle(
+idDetalles INT IDENTITY(1,1) NOT NULL
+			CONSTRAINT PK_idDetalles PRIMARY KEY CLUSTERED,
+horaEntrada DATETIME NOT NULL,
+horaSalida DATETIME NOT NULL,
+placaVehiculo NVARCHAR(8) NOT NULL
 )
 GO
 
--- Creación de la tabla Hora Salida
-CREATE TABLE Estacionamiento.HoraSalida (
-	HoraSalida DATETIME NOT NULL
-		CONSTRAINT PK_Estacionamiento_HoraSalida_HoraSalida PRIMARY KEY CLUSTERED,
-	PlacaVehiculo NVARCHAR(8) NOT NULL,
-	TotalTiempo INT NOT NULL,
-	Costo Decimal NOT NULL
-)
-GO
+
 -- Creamos la tabla reportes
 CREATE TABLE Estacionamiento.Reporte (
 	Id INT IDENTITY(1,1) NOT NULL
@@ -58,38 +54,46 @@ ALTER TABLE Estacionamiento.HoraEntrada
 		ON DELETE NO ACTION
 GO
 
-ALTER TABLE Estacionamiento.HoraSalida
+ALTER TABLE Estacionamiento.Detalle
 	ADD CONSTRAINT
-		FK_Estacionamiento_Vehiculo$TieneUnaOMas$Estacionamiento_HoraSalida
-		FOREIGN KEY (PlacaVehiculo) REFERENCES Estacionamiento.Vehiculo(Placa)
+		FK_Estacionamiento_Detalles$TieneUna$Estacionamiento_placaVehiculo
+		FOREIGN KEY (placaVehiculo) REFERENCES Estacionamiento.Vehiculo(Placa)
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION
 GO
 
-use SistemaDeEstacionamiento
-go
+ALTER TABLE Estacionamiento.Detalle
+ADD UNIQUE (placaVehiculo);
 
-CREATE TRIGGER	TR_Reporte
-ON Estacionamiento.HoraSalida INSTEAD OF DELETE
-AS
-begin
-DECLARE @Placa NVarchar(8)
-Select @Placa = Placa From Estacionamiento.Vehiculo  
-DECLARE @TipoVehiculo Varchar(20)
-Select @TipoVehiculo = TipoVehiculo From Estacionamiento.Vehiculo 
-DECLARE @HoraEntrada DateTime
-Select @HoraEntrada = HoraEntrada From Estacionamiento.HoraEntrada
-DECLARE @HoraSalida Datetime
-Select @HoraSalida = HoraSalida from deleted
-DECLARE @TiempoTotal INT
-Select @TiempoTotal = TiempoTotal from deleted
-DECLARE @costo decimal
-Select @Costo = Costo from deleted
+---Creacion de trigger para llenar la tabla de reporte---
+INSERT INTO Estacionamiento.Reporte VALUES(@Placa,@TipoVehiculo,@HoraEntrada,@HoraSalida,DATEDIFF(hh,@HoraEntrada,@HoraSalida),0)
 
-INSERT INTO Estacionamiento.Reporte VALUES(@Placa,@TipoVehiculo,@HoraEntrada,@HoraSalida,@TiempoTotal,@costo)
-
+if(@TiempoTotal) = 1 or (@TiempoTotal)=0 BEGIN
+	UPDATE Estacionamiento.Reporte 
+	SET Costo = 20 where Placa = @Placa
+END
+if(@TiempoTotal) = 2  BEGIN
+	UPDATE Estacionamiento.Reporte
+	SET Costo = 30 where Placa = @Placa
+END
+if(@TiempoTotal) = 3 or (@TiempoTotal) =4  BEGIN
+	UPDATE Estacionamiento.Reporte
+	SET Costo = 70 where Placa = @Placa
+END
+if(@TiempoTotal) >= 4  BEGIN
+	UPDATE Estacionamiento.Reporte
+	SET Costo = 15*TiempoTotal where Placa = @Placa
+END
+if(@TipoVehiculo) = 'Camion' or (@TipoVehiculo) = 'Bus' or (@TipoVehiculo) = 'Rastra' BEGIN
+	UPDATE Estacionamiento.Reporte
+	SET Costo = Costo*2 where Placa = @Placa
+	END
+	
+	if(@TipoVehiculo) = 'Motocicleta' or (@TipoVehiculo) = 'Otros' BEGIN
+	UPDATE Estacionamiento.Reporte
+	SET Costo = Costo*0.5 where Placa = @Placa
+	END
 end
-
 
 /*
 INSERT INTO Estacionamiento.Vehiculo

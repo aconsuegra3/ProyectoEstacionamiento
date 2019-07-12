@@ -74,7 +74,7 @@ namespace Sistema_Parqueo
         private List<ClassEstacionamiento> MostrarEntrada()
         {
             cn.Open();
-            String query = @"SELECT Placa,TipoVehiculo,HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.HoraEntrada he
+            String query = @"SELECT Placa,TipoVehiculo,HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.Detalle he
                                 ON Placa = he.PlacaVehiculo WHERE Placa = Placa";
             SqlCommand comando = new SqlCommand(query, cn);
             List<ClassEstacionamiento> Lista = new List<ClassEstacionamiento>();
@@ -111,8 +111,7 @@ namespace Sistema_Parqueo
         }
 
 
-
-        //HoRA SALIDA
+        
 
         private void BtnReporte_Click(object sender, RoutedEventArgs e)
         {
@@ -120,52 +119,26 @@ namespace Sistema_Parqueo
 
         }
 
-
+        // Boton Pagar
         private void BtnPagar_Click(object sender, RoutedEventArgs e)
         {
             if (lbBuscarPlaca.SelectedValue == null)
                 MessageBox.Show("Debes seleccionar un placa");
             else
             {
+                ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
+                estacionamiento.Placa = txtBuscarPlaca.Text;
+                estacionamiento.SalidaVehiculo();
 
-                try
-                {
-                    cn.Open();
-                    string query = "INSERT INTO Estacionamiento.HoraSalida VALUES (GETDATE(),@placa)";
-                    SqlCommand comando = new SqlCommand(query, cn);
-                    comando.Parameters.AddWithValue("@placa", txtBuscarPlaca.Text);
-                    comando.ExecuteNonQuery();
-                    cn.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                finally
-                {
-                    try
-                    {
-                        cn.Open();
-                        string query = "DELETE HoraEntrada FROM Estacionamiento.HoraEntrada where PlacaVehiculo = @placa";
-                        SqlCommand comando = new SqlCommand(query, cn);
-                        comando.Parameters.AddWithValue("@placa", txtBuscarPlaca.Text);
-                        comando.ExecuteNonQuery();
-                        cn.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Ha ocurrido un error");
-                        
-                    }
-                    MessageBox.Show("Gracias por su visita");
-                    this.dtgrid.ItemsSource = MostrarEntrada();
-                    txtBuscarPlaca.Text = String.Empty;
-                    lbBuscarPlaca.ItemsSource = "";
-                    txtBuscarPlaca.Focus();
-                }
             }
+            MessageBox.Show("Gracias por su visita");
+            this.dtgrid.ItemsSource = MostrarEntrada();
+            txtBuscarPlaca.Text = String.Empty;
+            lbBuscarPlaca.ItemsSource = "";
+            txtBuscarPlaca.Focus();
         }
 
+        //boton cancelar
         private void BtnCancelarBuscar_Click(object sender, RoutedEventArgs e)
         {
             txtBuscarPlaca.Text = String.Empty;
@@ -183,7 +156,7 @@ namespace Sistema_Parqueo
             try
             {
                 // Query para consultar
-                string query = @"SELECT v.Placa, v.TipoVehiculo, he.HoraEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.HoraEntrada he
+                string query = @"SELECT v.Placa, v.TipoVehiculo, he.horaEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.Detalle he
                                 ON v.Placa = he.PlacaVehiculo WHERE v.Placa = @PlacaV";
 
                 SqlCommand sqlCommand = new SqlCommand(query, cn);
@@ -201,7 +174,7 @@ namespace Sistema_Parqueo
                     //  Llenar el objeto de tipo DataTable
                     sqlDataAdapter.Fill(tablaVehiculos);
 
-                    lbBuscarPlaca.DisplayMemberPath = "HoraEntrada";
+                    lbBuscarPlaca.DisplayMemberPath = "horaEntrada";
 
                     lbBuscarPlaca.SelectedValuePath = "Placa";
 
@@ -213,6 +186,7 @@ namespace Sistema_Parqueo
                 MessageBox.Show(ex.ToString());
             }
         }
+        
     }
 }
 

@@ -78,6 +78,7 @@ namespace Sistema_Parqueo
                 return true;
             }
         }
+        
 
         //Insertar vehiculo a la base de datos
         public void InsertarVehiculo()
@@ -112,11 +113,11 @@ namespace Sistema_Parqueo
                 try
                 {
                     cn.Open();
-                    string query = "INSERT INTO Estacionamiento.HoraEntrada VALUES(GETDATE(), @placa)";
+                    string query = "INSERT INTO Estacionamiento.Detalle VALUES (GETDATE(),GEtDATE(),@placa)";
                     SqlCommand comando = new SqlCommand(query, cn);
                     comando.Parameters.AddWithValue("@placa", Placa);
                     comando.ExecuteNonQuery();
-                    //MessageBox.Show("Bienvenido");
+                    MessageBox.Show("Bienvenido");
                     cn.Close();
                 }
                 catch (Exception )
@@ -130,29 +131,48 @@ namespace Sistema_Parqueo
             }
 
         }
-        /*
-        public  List<ClassEstacionamiento> MostrarEntrada()
+
+
+
+
+        public void SalidaVehiculo()
         {
-
-
-            cn.Open();
-            String query = "Select * From Estacionamiento.HoraEntrada";
-            SqlCommand comando = new SqlCommand(query, cn);
-            List<ClassEstacionamiento> Lista = new List<ClassEstacionamiento>();
-            SqlDataReader reder = comando.ExecuteReader();
-
-            while (reder.Read()){
-                ClassEstacionamiento dato = new ClassEstacionamiento();
-                dato.HoraEntrada = reder.GetString(0);
-                dato.TipoVehiculo = reder.GetString(1);
-                Lista.Add(dato);
+            try
+            {
+                cn.Open();
+                string query = "UPDATE Estacionamiento.Detalle SET horaSalida=GETDATE() WHERE placaVehiculo =@placa";
+                SqlCommand comando = new SqlCommand(query, cn);
+                comando.Parameters.AddWithValue("@placa", Placa);
+                comando.ExecuteNonQuery();
+                cn.Close();
             }
-            reder.Close();
-            cn.Close();
-            return Lista;
-            
-        }
-        */
+            catch (Exception )
+            {
+                MessageBox.Show("Ha ocurrido un error");
+            }
+            finally
+             {
+                 try
+                 {
+                     cn.Open();
+                     string query = "DELETE FROM Estacionamiento.Detalle where PlacaVehiculo = @placa";
+                     SqlCommand comando = new SqlCommand(query, cn);
+                     comando.Parameters.AddWithValue("@placa", Placa);
+                     comando.ExecuteNonQuery();
+                     cn.Close();
+                 }
+                 catch (Exception )
+                 {
+                     MessageBox.Show("Ha ocurrido un error");
+
+                 }
+                
+             }
+        
+    }
+
+
+
     }
     }
 
