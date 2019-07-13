@@ -69,7 +69,7 @@ namespace Sistema_Parqueo
             txtPlaca.Focus();
         }
 
-        
+
         // Creacion de la lista mostrar
         private List<ClassEstacionamiento> MostrarEntrada()
         {
@@ -79,33 +79,27 @@ namespace Sistema_Parqueo
             SqlCommand comando = new SqlCommand(query, cn);
             List<ClassEstacionamiento> Lista = new List<ClassEstacionamiento>();
             SqlDataReader reder = comando.ExecuteReader();
-            
+
             while (reder.Read())
             {
-                ClassEstacionamiento dato = new ClassEstacionamiento();                
+                ClassEstacionamiento dato = new ClassEstacionamiento();
                 dato.Placa = reder.GetString(0);
                 dato.TipoVehiculo = reder.GetString(1);
                 dato.HoraEntrada = reder.GetDateTime(2);
                 Lista.Add(dato);
-             }
+            }
             reder.Close();
             cn.Close();
-            return Lista;            
+            return Lista;
         }
 
-        //Mostar los datos en el dataGrid
-        //private void Dtgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    MainWindow listar = new MainWindow();
-        //    listar.Show();
-        //}
-
+        //Mostar los datos en el listbox
         private void MostrarVehiculosDentro()
         {
             lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
         }
 
-  
+
 
         //Boton de actualizar
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -114,20 +108,17 @@ namespace Sistema_Parqueo
             listar.Show();
         }
 
-
-        
-
         private void BtnReporte_Click(object sender, RoutedEventArgs e)
         {
-           
+
 
         }
 
         // Boton Pagar
         private void BtnPagar_Click(object sender, RoutedEventArgs e)
         {
-            if (lbBuscarPlaca.SelectedValue == null)
-                MessageBox.Show("Debes seleccionar un placa");
+            if (lbVehiculosDentroEstacionamiento.SelectedValue == null)
+                MessageBox.Show("Debes seleccionar un Vehiculo");
             else
             {
                 ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
@@ -135,12 +126,48 @@ namespace Sistema_Parqueo
                 estacionamiento.SalidaVehiculo();
 
             }
+            CalcularPago();
             MessageBox.Show("Gracias por su visita");
             this.lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
             txtBuscarPlaca.Text = String.Empty;
             lbBuscarPlaca.ItemsSource = "";
             txtBuscarPlaca.Focus();
         }
+
+        private void CalcularPago()
+        {
+            try
+            {
+                cn.Open();
+                String query = @"SELECT Placa, TipoVehiculo, HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.Detalle he
+                                ON Placa = he.PlacaVehiculo WHERE Placa = Placa";
+                SqlCommand comando = new SqlCommand(query, cn);                
+                SqlDataReader reder = comando.ExecuteReader();
+
+                while (reder.Read())
+                {
+                    ClassEstacionamiento dato = new ClassEstacionamiento();
+                    dato.Placa = reder.GetString(0);
+                    dato.TipoVehiculo = reder.GetString(1);
+                    dato.HoraEntrada = reder.GetDateTime(2);
+                    //Lista.Add(dato);
+
+                    if (dato.TipoVehiculo == "Camioneta")
+                        MessageBox.Show("Verificar si funciona");
+                }
+                reder.Close();
+  
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                cn.Close();
+
+            }
+        } 
 
         //boton cancelar
         private void BtnCancelarBuscar_Click(object sender, RoutedEventArgs e)

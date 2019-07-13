@@ -74,9 +74,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Placa" HorizontalAlignment="Center"/>
-                            <Label Grid.Column="1" Content="Tipo Vehiculo" HorizontalAlignment="Center"/>
-                            <Label Grid.Column="2" Content="Hora de Entrada" HorizontalAlignment="Center"/>
+                            <Label FontFamily="Work Sans" Grid.Column="0" Content="Placa" HorizontalAlignment="Center"/>
+                            <Label FontFamily="Work Sans" Grid.Column="1" Content="Tipo Vehiculo" HorizontalAlignment="Center"/>
+                            <Label FontFamily="Work Sans" Grid.Column="2" Content="Hora de Entrada" HorizontalAlignment="Center"/>
                         </Grid>
                         <ListBox Name="lbVehiculosDentroEstacionamiento" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,26,10,10">
                             <ListBox.ItemTemplate>

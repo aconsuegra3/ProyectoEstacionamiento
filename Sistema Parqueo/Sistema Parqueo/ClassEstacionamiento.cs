@@ -132,9 +132,6 @@ namespace Sistema_Parqueo
 
         }
 
-
-
-
         public void SalidaVehiculo()
         {
             try
@@ -165,14 +162,10 @@ namespace Sistema_Parqueo
                  {
                      MessageBox.Show("Ha ocurrido un error");
 
-                 }
-                
-             }
-        
-    }
-
-
+                 }              
+             }        
+        }
 
     }
-    }
+}
 
