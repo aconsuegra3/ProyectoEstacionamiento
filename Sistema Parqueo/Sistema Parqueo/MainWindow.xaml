@@ -66,7 +66,34 @@
 
                     </Grid>
                     <Grid Grid.Row="2">
-                        <DataGrid Name="dtgrid" Background="Gainsboro" Margin="10,10,10,61" SelectionChanged="Dtgrid_SelectionChanged" />
+                        <!--<DataGrid Name="dtgrid" Background="Gainsboro" Margin="10,10,10,61" SelectionChanged="Dtgrid_SelectionChanged" />-->
+                        <!--<ListBox Name="lbVehiculosDentroEstacionamiento" Background="Gainsboro" Margin="10,10,10,9.8"/>-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Placa" HorizontalAlignment="Center"/>
+                            <Label Grid.Column="1" Content="Tipo Vehiculo" HorizontalAlignment="Center"/>
+                            <Label Grid.Column="2" Content="Hora de Entrada" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <ListBox Name="lbVehiculosDentroEstacionamiento" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,26,10,10">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Placa}"></TextBlock>
+                                        <TextBlock Grid.Column="1" Text="{Binding TipoVehiculo}"></TextBlock>
+                                        <TextBlock Grid.Column="2" Text="{Binding HoraEntrada}"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                         <Button Content="Actualizar" Foreground="Black" Background="#F9AA33" Margin="158,233,165,19" Height="Auto" Click="Button_Click" />
                         <!--Muestra los datos-->
                     </Grid>

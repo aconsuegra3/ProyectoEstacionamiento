@@ -23,12 +23,12 @@ namespace Sistema_Parqueo
     /// </summary>
     public partial class MainWindow : Window
     {
-        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
 
         public MainWindow()
         {
             InitializeComponent();
-            this.dtgrid.ItemsSource = MostrarEntrada();
+            this.lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
 
 
             //MostrarVehiculosDentro();
@@ -42,7 +42,7 @@ namespace Sistema_Parqueo
         private void Aceptar(object sender, RoutedEventArgs e)
         {
             ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-            if (txtPlaca.Text.Equals("") == false )
+            if (txtPlaca.Text.Equals("") == false && cmbTipoVehiculo.SelectedIndex != -1)
             {
 
                 estacionamiento.Placa = txtPlaca.Text;
@@ -51,7 +51,7 @@ namespace Sistema_Parqueo
                 txtPlaca.Clear();
                 cmbTipoVehiculo.SelectedIndex = -1;
                 txtPlaca.Focus();
-                this.dtgrid.ItemsSource = MostrarEntrada();
+                this.lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
             }
             else
             {
@@ -82,23 +82,27 @@ namespace Sistema_Parqueo
             
             while (reder.Read())
             {
-                ClassEstacionamiento dato = new ClassEstacionamiento();
-                dato.HoraEntrada = reder.GetDateTime(2);
+                ClassEstacionamiento dato = new ClassEstacionamiento();                
                 dato.Placa = reder.GetString(0);
                 dato.TipoVehiculo = reder.GetString(1);
+                dato.HoraEntrada = reder.GetDateTime(2);
                 Lista.Add(dato);
              }
             reder.Close();
             cn.Close();
-            return Lista;
-
+            return Lista;            
         }
 
         //Mostar los datos en el dataGrid
-        private void Dtgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //private void Dtgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    MainWindow listar = new MainWindow();
+        //    listar.Show();
+        //}
+
+        private void MostrarVehiculosDentro()
         {
-            MainWindow listar = new MainWindow();
-            listar.Show();
+            lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
         }
 
   
@@ -132,7 +136,7 @@ namespace Sistema_Parqueo
 
             }
             MessageBox.Show("Gracias por su visita");
-            this.dtgrid.ItemsSource = MostrarEntrada();
+            this.lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
             txtBuscarPlaca.Text = String.Empty;
             lbBuscarPlaca.ItemsSource = "";
             txtBuscarPlaca.Focus();
