@@ -29,6 +29,7 @@ namespace Sistema_Parqueo
         {
             InitializeComponent();
             this.lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
+            txtPlaca.Focus();
 
 
             //MostrarVehiculosDentro();
@@ -86,6 +87,7 @@ namespace Sistema_Parqueo
                 dato.Placa = reder.GetString(0);
                 dato.TipoVehiculo = reder.GetString(1);
                 dato.HoraEntrada = reder.GetDateTime(2);
+                lbVehiculosDentroEstacionamiento.SelectedValuePath = "Placa";
                 Lista.Add(dato);
             }
             reder.Close();
@@ -111,7 +113,6 @@ namespace Sistema_Parqueo
         private void BtnReporte_Click(object sender, RoutedEventArgs e)
         {
 
-
         }
 
         // Boton Pagar
@@ -122,7 +123,7 @@ namespace Sistema_Parqueo
             else
             {
                 ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-                estacionamiento.Placa = txtBuscarPlaca.Text;
+                estacionamiento.Placa = lbVehiculosDentroEstacionamiento.SelectedValue.ToString();
                 estacionamiento.SalidaVehiculo();
 
             }
@@ -134,29 +135,24 @@ namespace Sistema_Parqueo
             txtBuscarPlaca.Focus();
         }
 
+        // Método para consultar el pago realizado en el Trigger de la Base
         private void CalcularPago()
         {
+            
             try
             {
                 cn.Open();
-                String query = @"SELECT Placa, TipoVehiculo, HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.Detalle he
-                                ON Placa = he.PlacaVehiculo WHERE Placa = Placa";
-                SqlCommand comando = new SqlCommand(query, cn);                
+                string query = @"SELECT Costo FROM Estacionamiento.Reporte WHERE Placa = @Placa";
+                SqlCommand comando = new SqlCommand(query, cn);
+                comando.Parameters.AddWithValue("@Placa", lbVehiculosDentroEstacionamiento.SelectedValue);               
                 SqlDataReader reder = comando.ExecuteReader();
 
                 while (reder.Read())
                 {
-                    ClassEstacionamiento dato = new ClassEstacionamiento();
-                    dato.Placa = reder.GetString(0);
-                    dato.TipoVehiculo = reder.GetString(1);
-                    dato.HoraEntrada = reder.GetDateTime(2);
-                    //Lista.Add(dato);
-
-                    if (dato.TipoVehiculo == "Camioneta")
-                        MessageBox.Show("Verificar si funciona");
+                    MessageBox.Show("prueba de impresion");
+                    MessageBox.Show("Total a pagar; {0}",reder["Costo"].ToString());
                 }
                 reder.Close();
-  
             }
             catch (Exception ex)
             {

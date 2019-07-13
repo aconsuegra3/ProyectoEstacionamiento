@@ -14,6 +14,7 @@ namespace Sistema_Parqueo
         private DateTime horaEntrada;
         private string placa;
         private string tipoVehiculo;
+        private decimal costo;
         SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
         public ClassEstacionamiento()
         {
@@ -35,6 +36,11 @@ namespace Sistema_Parqueo
         {
             get { return horaEntrada; }
             set { horaEntrada = value; }
+        }
+        public decimal Costo
+        {
+            get { return costo; }
+            set { costo = value; }
         }
 
         //Valida si la placa existe o se debe insertar
@@ -127,7 +133,7 @@ namespace Sistema_Parqueo
             }
             else
             {
-                MessageBox.Show("El vehiculo no conside con la placa registrada");
+                MessageBox.Show("El vehiculo no coincide con la placa registrada");
             }
 
         }
