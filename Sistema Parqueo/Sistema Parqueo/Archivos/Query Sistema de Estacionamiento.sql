@@ -1,6 +1,7 @@
 -- Creación de la tabla Vehículo-- BASE DE DATOS ESTACIONAMIENTO --
 -- Creado por: Abel Consuegra y Luis Rivera --
 
+
 USE tempdb
 GO
 
@@ -46,13 +47,7 @@ CREATE TABLE Estacionamiento.Reporte (
 )
 
 -- Creamos las llaves foráneas
-ALTER TABLE Estacionamiento.HoraEntrada
-	ADD CONSTRAINT
-		FK_Estacionamiento_Vehiculo$TieneUnaOMas$Estacionamiento_HoraEntrada
-		FOREIGN KEY (PlacaVehiculo) REFERENCES Estacionamiento.Vehiculo(Placa)
-		ON UPDATE NO ACTION
-		ON DELETE NO ACTION
-GO
+
 
 ALTER TABLE Estacionamiento.Detalle
 	ADD CONSTRAINT
@@ -64,8 +59,26 @@ GO
 
 ALTER TABLE Estacionamiento.Detalle
 ADD UNIQUE (placaVehiculo);
+go
 
 ---Creacion de trigger para llenar la tabla de reporte---
+CREATE TRIGGER	TR_Reporte
+ON Estacionamiento.Detalle FOR UPDATE
+AS
+begin
+DECLARE @Placa NVarchar(8)
+Select @Placa = PlacaVehiculo From Estacionamiento.Detalle
+DECLARE @TipoVehiculo Varchar(20)
+Select @TipoVehiculo = TipoVehiculo From Estacionamiento.Vehiculo where Placa = @Placa 
+DECLARE @HoraEntrada DateTime
+Select @HoraEntrada = HoraEntrada From Estacionamiento.Detalle where PlacaVehiculo =@Placa
+DECLARE @HoraSalida Datetime
+Select @HoraSalida = HoraSalida from Estacionamiento.Detalle
+Declare @TiempoTotal INT
+SELECT @TiempoTotal=TiempoTotal From Estacionamiento.Reporte
+
+
+
 INSERT INTO Estacionamiento.Reporte VALUES(@Placa,@TipoVehiculo,@HoraEntrada,@HoraSalida,DATEDIFF(hh,@HoraEntrada,@HoraSalida),0)
 
 if(@TiempoTotal) = 1 or (@TiempoTotal)=0 BEGIN
@@ -94,6 +107,10 @@ if(@TipoVehiculo) = 'Camion' or (@TipoVehiculo) = 'Bus' or (@TipoVehiculo) = 'Ra
 	SET Costo = Costo*0.5 where Placa = @Placa
 	END
 end
+GO
+
+
+
 
 /*
 INSERT INTO Estacionamiento.Vehiculo

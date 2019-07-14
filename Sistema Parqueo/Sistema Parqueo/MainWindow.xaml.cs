@@ -23,12 +23,13 @@ namespace Sistema_Parqueo
     /// </summary>
     public partial class MainWindow : Window
     {
-        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
+        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
 
         public MainWindow()
         {
             InitializeComponent();
-            this.lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
+            this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();
             txtPlaca.Focus();
 
 
@@ -52,7 +53,7 @@ namespace Sistema_Parqueo
                 txtPlaca.Clear();
                 cmbTipoVehiculo.SelectedIndex = -1;
                 txtPlaca.Focus();
-                this.lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
+                this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();
             }
             else
             {
@@ -71,34 +72,13 @@ namespace Sistema_Parqueo
         }
 
 
-        // Creacion de la lista mostrar
-        private List<ClassEstacionamiento> MostrarEntrada()
-        {
-            cn.Open();
-            String query = @"SELECT Placa,TipoVehiculo,HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.Detalle he
-                                ON Placa = he.PlacaVehiculo WHERE Placa = Placa";
-            SqlCommand comando = new SqlCommand(query, cn);
-            List<ClassEstacionamiento> Lista = new List<ClassEstacionamiento>();
-            SqlDataReader reder = comando.ExecuteReader();
-
-            while (reder.Read())
-            {
-                ClassEstacionamiento dato = new ClassEstacionamiento();
-                dato.Placa = reder.GetString(0);
-                dato.TipoVehiculo = reder.GetString(1);
-                dato.HoraEntrada = reder.GetDateTime(2);
-                lbVehiculosDentroEstacionamiento.SelectedValuePath = "Placa";
-                Lista.Add(dato);
-            }
-            reder.Close();
-            cn.Close();
-            return Lista;
-        }
+        
 
         //Mostar los datos en el listbox
         private void MostrarVehiculosDentro()
         {
-            lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
+            ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
+            lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();
         }
 
 
@@ -112,29 +92,28 @@ namespace Sistema_Parqueo
 
         private void BtnReporte_Click(object sender, RoutedEventArgs e)
         {
-
+            Reporte reporte = new Reporte();
+            reporte.Show();
         }
 
         // Boton Pagar
         private void BtnPagar_Click(object sender, RoutedEventArgs e)
         {
-            if (lbVehiculosDentroEstacionamiento.SelectedValue == null)
+            if (txtBuscarPlaca.Text.Equals("") == true)
                 MessageBox.Show("Debes seleccionar un Vehiculo");
             else
             {
-                ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-                estacionamiento.Placa = lbVehiculosDentroEstacionamiento.SelectedValue.ToString();
+                estacionamiento.Placa = txtBuscarPlaca.Text;
                 estacionamiento.SalidaVehiculo();
-
+                MessageBox.Show("Gracias por su visita");
             }
-            CalcularPago();
-            MessageBox.Show("Gracias por su visita");
-            this.lbVehiculosDentroEstacionamiento.ItemsSource = MostrarEntrada();
+            //CalcularPago();
+            this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();
             txtBuscarPlaca.Text = String.Empty;
             lbBuscarPlaca.ItemsSource = "";
             txtBuscarPlaca.Focus();
         }
-
+        /*
         // Método para consultar el pago realizado en el Trigger de la Base
         private void CalcularPago()
         {
@@ -164,7 +143,7 @@ namespace Sistema_Parqueo
 
             }
         } 
-
+        */
         //boton cancelar
         private void BtnCancelarBuscar_Click(object sender, RoutedEventArgs e)
         {

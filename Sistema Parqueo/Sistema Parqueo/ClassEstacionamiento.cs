@@ -12,10 +12,13 @@ namespace Sistema_Parqueo
     class ClassEstacionamiento
     {
         private DateTime horaEntrada;
+        private DateTime horaSalida;
         private string placa;
         private string tipoVehiculo;
         private decimal costo;
-        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        private int tiempoTotal;
+
+        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
         public ClassEstacionamiento()
         {
             placa = "PorDefecto";
@@ -37,11 +40,22 @@ namespace Sistema_Parqueo
             get { return horaEntrada; }
             set { horaEntrada = value; }
         }
+        public DateTime HoraSalida
+        {
+            get { return horaSalida; }
+            set { horaSalida = value; }
+        }
         public decimal Costo
         {
             get { return costo; }
             set { costo = value; }
         }
+        public int TiempoTotal
+        {
+            get { return tiempoTotal; }
+            set { tiempoTotal = value; }
+        }
+
 
         //Valida si la placa existe o se debe insertar
         public Boolean Validar()
@@ -151,7 +165,7 @@ namespace Sistema_Parqueo
             }
             catch (Exception )
             {
-                MessageBox.Show("Ha ocurrido un error");
+                MessageBox.Show("Ha ocurrido un error con salidavehiculo");
             }
             finally
              {
@@ -170,6 +184,60 @@ namespace Sistema_Parqueo
 
                  }              
              }        
+        }
+
+        
+
+
+        // Creacion de la lista mostrar
+        public List<ClassEstacionamiento> MostrarEntrada()
+        {
+            cn.Open();
+            String query = @"SELECT Placa,TipoVehiculo,HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.Detalle he
+                                ON Placa = he.PlacaVehiculo WHERE Placa = Placa";
+            SqlCommand comando = new SqlCommand(query, cn);
+            List<ClassEstacionamiento> Lista = new List<ClassEstacionamiento>();
+            SqlDataReader reder = comando.ExecuteReader();
+
+            while (reder.Read())
+            {
+                ClassEstacionamiento dato = new ClassEstacionamiento();
+                dato.Placa = reder.GetString(0);
+                dato.TipoVehiculo = reder.GetString(1);
+                dato.HoraEntrada = reder.GetDateTime(2);
+               // lbVehiculosDentroEstacionamiento.SelectedValuePath = "Placa";
+                Lista.Add(dato);
+            }
+            reder.Close();
+            cn.Close();
+            return Lista;
+        }
+
+        // Creacion de la lista mostrarReporte
+        public List<ClassEstacionamiento> MostrarReporte()
+        {
+            cn.Open();
+            string query = "SELECT * FROM Estacionamiento.Reporte ";
+            SqlCommand comando = new SqlCommand(query, cn);
+            List<ClassEstacionamiento> reporte = new List<ClassEstacionamiento>();
+            SqlDataReader reder = comando.ExecuteReader();
+
+            while (reder.Read())
+            {
+                ClassEstacionamiento datoR = new ClassEstacionamiento();
+                datoR.Placa = reder.GetString(1);
+                datoR.TipoVehiculo = reder.GetString(2);
+                datoR.HoraEntrada = reder.GetDateTime(3);
+                datoR.HoraSalida = reder.GetDateTime(4);
+                datoR.TiempoTotal = reder.GetInt32(5);
+                datoR.Costo = reder.GetDecimal(6);
+
+                // lbVehiculosDentroEstacionamiento.SelectedValuePath = "Placa";
+                reporte.Add(datoR);
+            }
+            reder.Close();
+            cn.Close();
+            return reporte;
         }
 
     }

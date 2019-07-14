@@ -56,7 +56,7 @@
                             <ComboBoxItem Name="Camion">Camion</ComboBoxItem>
                             <ComboBoxItem Name="Bus">Bus</ComboBoxItem>
                             <ComboBoxItem Name="Rastra">Rastra</ComboBoxItem>
-                            <ComboBoxItem Name="Motocicleta">Mocicleta</ComboBoxItem>
+                            <ComboBoxItem Name="Motocicleta">Motocicleta</ComboBoxItem>
                             <ComboBoxItem Name="Otros">Otros</ComboBoxItem>
                         </ComboBox>
                         <Button Name="btnSalir" Background="#F9AA33" Foreground="Black" Content="Aceptar" HorizontalAlignment="Left" Margin="89,151,0,0" VerticalAlignment="Top" Width="91" Height="33" Click="Aceptar"/>
