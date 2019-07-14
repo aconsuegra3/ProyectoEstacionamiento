@@ -18,7 +18,7 @@ namespace Sistema_Parqueo
         private decimal costo;
         private int tiempoTotal;
 
-        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
         public ClassEstacionamiento()
         {
             placa = "PorDefecto";
@@ -205,14 +205,40 @@ namespace Sistema_Parqueo
                 dato.Placa = reder.GetString(0);
                 dato.TipoVehiculo = reder.GetString(1);
                 dato.HoraEntrada = reder.GetDateTime(2);
-               // lbVehiculosDentroEstacionamiento.SelectedValuePath = "Placa";
+                //lbVehiculosDentroEstacionamiento.SelectedValuePath = "Placa";
                 Lista.Add(dato);
             }
             reder.Close();
             cn.Close();
             return Lista;
         }
+        
+        public List<ClassEstacionamiento> BuscarEntrada()
+        {
+            
+            cn.Open();
+            String query = @"SELECT Placa,TipoVehiculo,HoraEntrada FROM Estacionamiento.Vehiculo  INNER JOIN Estacionamiento.Detalle he
+                                ON Placa = he.PlacaVehiculo WHERE Placa = @Placa";
+            SqlCommand comando = new SqlCommand(query, cn);
 
+            comando.Parameters.AddWithValue("@Placa", Placa);
+            List<ClassEstacionamiento> ListaB = new List<ClassEstacionamiento>();
+            SqlDataReader reder = comando.ExecuteReader();
+
+            while (reder.Read())
+            {
+                ClassEstacionamiento datob = new ClassEstacionamiento();
+                datob.Placa = reder.GetString(0);
+                datob.TipoVehiculo = reder.GetString(1);
+                datob.HoraEntrada = reder.GetDateTime(2);
+               //lbVehiculosEstacionamiento.SelectedValuePath = "Placa";
+                ListaB.Add(datob);
+            }
+            reder.Close();
+            cn.Close();
+            return ListaB;                        
+        }
+        
         // Creacion de la lista mostrarReporte
         public List<ClassEstacionamiento> MostrarReporte()
         {

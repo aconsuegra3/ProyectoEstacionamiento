@@ -24,12 +24,12 @@ namespace Sistema_Parqueo
     public partial class MainWindow : Window
     {
         ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
 
         public MainWindow()
         {
             InitializeComponent();
-            this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();
+            this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();            
             txtPlaca.Focus();
 
 
@@ -53,7 +53,7 @@ namespace Sistema_Parqueo
                 txtPlaca.Clear();
                 cmbTipoVehiculo.SelectedIndex = -1;
                 txtPlaca.Focus();
-                this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();
+                this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();                
             }
             else
             {
@@ -78,7 +78,7 @@ namespace Sistema_Parqueo
         private void MostrarVehiculosDentro()
         {
             ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-            lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();
+            lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();            
         }
 
 
@@ -104,16 +104,18 @@ namespace Sistema_Parqueo
                 MessageBox.Show("Debes seleccionar un Vehiculo");
             else
             {
+                ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
                 estacionamiento.Placa = txtBuscarPlaca.Text;
                 estacionamiento.SalidaVehiculo();
                 MessageBox.Show("Gracias por su visita");
             }
             //CalcularPago();
-            this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();
+            this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();           
             txtBuscarPlaca.Text = String.Empty;
-            lbBuscarPlaca.ItemsSource = "";
+            lbVehiculosEstacionamiento.ItemsSource = "";
             txtBuscarPlaca.Focus();
-        }
+        }        
+
         /*
         // Método para consultar el pago realizado en el Trigger de la Base
         private void CalcularPago()
@@ -149,7 +151,7 @@ namespace Sistema_Parqueo
         private void BtnCancelarBuscar_Click(object sender, RoutedEventArgs e)
         {
             txtBuscarPlaca.Text = String.Empty;
-            lbBuscarPlaca.ItemsSource = "";
+            //lbBuscarPlaca.ItemsSource = "";
             txtBuscarPlaca.Focus();
         }
 
@@ -160,38 +162,11 @@ namespace Sistema_Parqueo
                 MessageBox.Show("Debe ingresar una placa en la caja de texto.");
                 txtBuscarPlaca.Focus();
             }
-            try
-            {
-                // Query para consultar
-                string query = @"SELECT v.Placa, v.TipoVehiculo, he.horaEntrada FROM Estacionamiento.Vehiculo v INNER JOIN Estacionamiento.Detalle he
-                                ON v.Placa = he.PlacaVehiculo WHERE v.Placa = @PlacaV";
+            ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
 
-                SqlCommand sqlCommand = new SqlCommand(query, cn);
-
-                // SqlDataAdapter es una interfaz entre las tablas y los objetos utilizables en C#
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
-
-                using (sqlDataAdapter)
-                {
-                    sqlCommand.Parameters.AddWithValue("@PlacaV", txtBuscarPlaca.Text);
-
-                    //            Objecto en C# que refleja una tabla de una BD
-                    DataTable tablaVehiculos = new DataTable();
-
-                    //  Llenar el objeto de tipo DataTable
-                    sqlDataAdapter.Fill(tablaVehiculos);
-
-                    lbBuscarPlaca.DisplayMemberPath = "horaEntrada";
-
-                    lbBuscarPlaca.SelectedValuePath = "Placa";
-
-                    lbBuscarPlaca.ItemsSource = tablaVehiculos.DefaultView;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            estacionamiento.Placa = txtBuscarPlaca.Text;
+            this.lbVehiculosEstacionamiento.ItemsSource = estacionamiento.BuscarEntrada();
+            this.lbVehiculosEstacionamiento.SelectedValuePath = estacionamiento.Placa;            
         }
         
     }
