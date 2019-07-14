@@ -4,6 +4,7 @@
 USE tempdb
 GO
 
+
 CREATE DATABASE SistemaDeEstacionamiento
 GO
 
@@ -17,9 +18,9 @@ GO
 CREATE TABLE Estacionamiento.Vehiculo (
 	Placa NVARCHAR(8) NOT NULL
 		CONSTRAINT PK_Estacionamiento_Vehiculo_Placa PRIMARY KEY CLUSTERED,
-	TipoVehiculo VARCHAR(20) NOT NULL,
+	TipoVehiculo VARCHAR(20) NOT NULL
 )
-
+GO
 
 --Creacion tabla detalle---
 
@@ -42,9 +43,9 @@ CREATE TABLE Estacionamiento.Reporte (
 	HoraEntrada DATETIME NOT NULL,
 	HoraSalida DATETIME NOT NULL,
 	TiempoTotal INT NOT NULL,
-	Costo DECIMAL NOT NULL,
+	Costo DECIMAL NOT NULL
 )
-
+GO
 -- Creamos las llaves foráneas
 
 
@@ -57,7 +58,7 @@ ALTER TABLE Estacionamiento.Detalle
 GO
 
 ALTER TABLE Estacionamiento.Detalle
-ADD UNIQUE (placaVehiculo);
+ADD UNIQUE (placaVehiculo)
 go
 
 ---Creacion de trigger para llenar la tabla de reporte---

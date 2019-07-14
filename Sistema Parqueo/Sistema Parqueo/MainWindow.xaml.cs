@@ -24,7 +24,7 @@ namespace Sistema_Parqueo
     public partial class MainWindow : Window
     {
         ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
 
         public MainWindow()
         {
@@ -100,7 +100,7 @@ namespace Sistema_Parqueo
         // Boton Pagar
         private void BtnPagar_Click(object sender, RoutedEventArgs e)
         {
-            if (txtBuscarPlaca.Text.Equals("") == true)
+            if ( lbVehiculosEstacionamiento.SelectedItem==null)
                 MessageBox.Show("Debes seleccionar un Vehiculo");
             else
             {
@@ -116,42 +116,12 @@ namespace Sistema_Parqueo
             txtBuscarPlaca.Focus();
         }        
 
-        /*
-        // Método para consultar el pago realizado en el Trigger de la Base
-        private void CalcularPago()
-        {
-            
-            try
-            {
-                cn.Open();
-                string query = @"SELECT Costo FROM Estacionamiento.Reporte WHERE Placa = @Placa";
-                SqlCommand comando = new SqlCommand(query, cn);
-                comando.Parameters.AddWithValue("@Placa", lbVehiculosDentroEstacionamiento.SelectedValue);               
-                SqlDataReader reder = comando.ExecuteReader();
-
-                while (reder.Read())
-                {
-                    MessageBox.Show("prueba de impresion");
-                    MessageBox.Show("Total a pagar; {0}",reder["Costo"].ToString());
-                }
-                reder.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                cn.Close();
-
-            }
-        } 
-        */
+       
         //boton cancelar
         private void BtnCancelarBuscar_Click(object sender, RoutedEventArgs e)
         {
             txtBuscarPlaca.Text = String.Empty;
-            //lbBuscarPlaca.ItemsSource = "";
+            lbVehiculosEstacionamiento.ItemsSource = "";
             txtBuscarPlaca.Focus();
         }
 
