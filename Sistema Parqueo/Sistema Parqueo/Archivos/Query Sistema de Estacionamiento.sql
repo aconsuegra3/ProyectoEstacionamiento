@@ -1,7 +1,6 @@
 -- Creación de la tabla Vehículo-- BASE DE DATOS ESTACIONAMIENTO --
 -- Creado por: Abel Consuegra y Luis Rivera --
 
-
 USE tempdb
 GO
 
@@ -67,7 +66,7 @@ ON Estacionamiento.Detalle FOR UPDATE
 AS
 begin
 DECLARE @Placa NVarchar(8)
-Select @Placa = PlacaVehiculo From Estacionamiento.Detalle
+Select @Placa = PlacaVehiculo From deleted
 DECLARE @TipoVehiculo Varchar(20)
 Select @TipoVehiculo = TipoVehiculo From Estacionamiento.Vehiculo where Placa = @Placa 
 DECLARE @HoraEntrada DateTime
@@ -76,36 +75,32 @@ DECLARE @HoraSalida Datetime
 Select @HoraSalida = HoraSalida from Estacionamiento.Detalle
 Declare @TiempoTotal INT
 SELECT @TiempoTotal=TiempoTotal From Estacionamiento.Reporte
-
-
-
-INSERT INTO Estacionamiento.Reporte VALUES(@Placa,@TipoVehiculo,@HoraEntrada,@HoraSalida,DATEDIFF(hh,@HoraEntrada,@HoraSalida),0)
+set @TiempoTotal = DATEDIFF(hh,@HoraEntrada,@HoraSalida)
+declare @costo int
+set @costo = 0
 
 if(@TiempoTotal) = 1 or (@TiempoTotal)=0 BEGIN
-	UPDATE Estacionamiento.Reporte 
-	SET Costo = 20 where Placa = @Placa
+	set @costo=20
+	set @TiempoTotal=1
 END
 if(@TiempoTotal) = 2  BEGIN
-	UPDATE Estacionamiento.Reporte
-	SET Costo = 30 where Placa = @Placa
+	set @costo=30
 END
 if(@TiempoTotal) = 3 or (@TiempoTotal) =4  BEGIN
-	UPDATE Estacionamiento.Reporte
-	SET Costo = 70 where Placa = @Placa
+	set @costo=70
 END
 if(@TiempoTotal) >= 4  BEGIN
-	UPDATE Estacionamiento.Reporte
-	SET Costo = 15*TiempoTotal where Placa = @Placa
+	set @costo=15*@TiempoTotal
 END
 if(@TipoVehiculo) = 'Camion' or (@TipoVehiculo) = 'Bus' or (@TipoVehiculo) = 'Rastra' BEGIN
 	UPDATE Estacionamiento.Reporte
-	SET Costo = Costo*2 where Placa = @Placa
+	set @costo= @costo*2
 	END
-	
 	if(@TipoVehiculo) = 'Motocicleta' or (@TipoVehiculo) = 'Otros' BEGIN
-	UPDATE Estacionamiento.Reporte
-	SET Costo = Costo*0.5 where Placa = @Placa
+	set @costo=@costo*0.5
 	END
+
+INSERT INTO Estacionamiento.Reporte VALUES(@Placa,@TipoVehiculo,@HoraEntrada,@HoraSalida,@TiempoTotal,@costo)
 end
 GO
 

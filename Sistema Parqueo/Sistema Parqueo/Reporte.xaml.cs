@@ -34,8 +34,9 @@ namespace Sistema_Parqueo
 
         private void Salir(object sender, RoutedEventArgs e)
         {
-
+            MainWindow main =new MainWindow();
             this.Hide();
+            main.Show();
         }
     }
 }

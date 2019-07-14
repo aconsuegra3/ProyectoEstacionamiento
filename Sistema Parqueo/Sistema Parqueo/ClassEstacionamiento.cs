@@ -180,7 +180,7 @@ namespace Sistema_Parqueo
                  }
                  catch (Exception )
                  {
-                     MessageBox.Show("Ha ocurrido un error");
+                     MessageBox.Show("Placa no existe");
 
                  }              
              }        

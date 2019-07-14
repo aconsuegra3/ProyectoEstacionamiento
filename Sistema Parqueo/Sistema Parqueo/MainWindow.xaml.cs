@@ -93,6 +93,7 @@ namespace Sistema_Parqueo
         private void BtnReporte_Click(object sender, RoutedEventArgs e)
         {
             Reporte reporte = new Reporte();
+            this.Hide();
             reporte.Show();
         }
 
