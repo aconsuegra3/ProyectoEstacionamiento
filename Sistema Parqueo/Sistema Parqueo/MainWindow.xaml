@@ -119,6 +119,16 @@
                         <Button Name="btnBuscarPlaca" Background="#F9AA33" Foreground="Black" Content="Buscar" HorizontalAlignment="Left" Margin="299,24,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Buscar" />
                     </Grid>
                     <Grid Grid.Row="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label FontFamily="Work Sans" Grid.Column="0" Content="Placa" HorizontalAlignment="Center"/>
+                            <Label FontFamily="Work Sans" Grid.Column="1" Content="Tipo Vehiculo" HorizontalAlignment="Center"/>
+                            <Label FontFamily="Work Sans" Grid.Column="2" Content="Hora de Entrada" HorizontalAlignment="Center"/>
+                        </Grid>
                         <ListBox Name="lbVehiculosEstacionamiento" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,26,10,10">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>

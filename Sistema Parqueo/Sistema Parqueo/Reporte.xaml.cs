@@ -38,5 +38,12 @@ namespace Sistema_Parqueo
             this.Hide();
             main.Show();
         }
+
+        private void Atras_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            this.Hide();
+            main.Show();
+        }
     }
 }

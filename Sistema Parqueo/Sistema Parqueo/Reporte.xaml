@@ -57,9 +57,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-</Grid>
-
-
+  </Grid>
+            <Button Content="Atrás" Foreground="Black" Background="#F9AA33" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Height="Auto" Width="75" Click="Atras_Click"/>
         </Grid>
 
 
