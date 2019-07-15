@@ -23,13 +23,13 @@ namespace Sistema_Parqueo
         public mensajePago()
         {
             InitializeComponent();
-            this.lbpago.ItemsSource = estacionamiento.MostrarMensaje();
+            this.lbpago.ItemsSource = estacionamiento.MostrarPago();
         }
 
         private void mostrarMensaje()
         {
             ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-            lbpago.ItemsSource = estacionamiento.MostrarMensaje();
+            lbpago.ItemsSource = estacionamiento.MostrarPago();
         }
 
      

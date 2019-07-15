@@ -97,6 +97,7 @@ namespace Sistema_Parqueo
             reporte.Show();
         }
 
+
         // Boton Pagar
         private void BtnPagar_Click(object sender, RoutedEventArgs e)
         {
@@ -104,12 +105,12 @@ namespace Sistema_Parqueo
                 MessageBox.Show("Debes seleccionar un Vehiculo");
             else
             {
-                mensajePago ms = new mensajePago();
-                ms.Show();
+                
                 ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
                 estacionamiento.Placa = txtBuscarPlaca.Text;
                 estacionamiento.SalidaVehiculo();
-
+                mensajePago ms = new mensajePago();
+                ms.Show();
             }
             
             this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();           
@@ -134,6 +135,7 @@ namespace Sistema_Parqueo
                 MessageBox.Show("Debe ingresar una placa en la caja de texto.");
                 txtBuscarPlaca.Focus();
             }
+            
             ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
 
             estacionamiento.Placa = txtBuscarPlaca.Text;

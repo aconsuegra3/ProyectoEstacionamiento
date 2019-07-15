@@ -266,12 +266,12 @@ namespace Sistema_Parqueo
             cn.Close();
             return reporte;
         }
-
+      
         // Creacion de la lista mostrarMensaje
-        public List<ClassEstacionamiento> MostrarMensaje()
+         public List<ClassEstacionamiento> MostrarPago()
         {
             cn.Open();
-            string query = "SELECT Placa,TipoVehiculo, TiempoTotal, Costo FROM Estacionamiento.Reporte Where Placa = @placa ";
+            string query = " SELECT TOP 1 * FROM Estacionamiento.Reporte ORDER BY id DESC";
             SqlCommand comando = new SqlCommand(query, cn);
             comando.Parameters.AddWithValue("@placa", Placa);
             List<ClassEstacionamiento> reporte = new List<ClassEstacionamiento>();
@@ -279,12 +279,13 @@ namespace Sistema_Parqueo
 
             while (reder.Read())
             {
-                ClassEstacionamiento dato = new ClassEstacionamiento();
-                dato.Placa = reder.GetString(0);
-                dato.TipoVehiculo = reder.GetString(1);
-                dato.TiempoTotal = reder.GetInt32(2);
-                dato.Costo = reder.GetDecimal(3);
-                reporte.Add(dato);
+                ClassEstacionamiento datoR = new ClassEstacionamiento();
+                datoR.Placa = reder.GetString(1);
+                datoR.TipoVehiculo = reder.GetString(2);
+                datoR.TiempoTotal = reder.GetInt32(5);
+                datoR.Costo = reder.GetDecimal(6);
+                
+                reporte.Add(datoR);
             }
             reder.Close();
             cn.Close();
