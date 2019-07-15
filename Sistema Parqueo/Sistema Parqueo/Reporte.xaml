@@ -33,32 +33,43 @@
             <Label FontFamily="Work Sans" FontSize="12"  Content="Costo" HorizontalAlignment="Center" Margin="672,59,86,435"/>
 
             <Grid>
-               
-                <ListBox Name="lbReporte" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,84,10,22.2">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="190"/>
-                                <ColumnDefinition Width="190"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Placa}"></TextBlock>
-                            <TextBlock Grid.Column="1" Text="{Binding TipoVehiculo}"></TextBlock>
-                            <TextBlock Grid.Column="2" Text="{Binding HoraEntrada}"></TextBlock>
-                            <TextBlock Grid.Column="3" Text="{Binding HoraSalida}"></TextBlock>
-                            <TextBlock Grid.Column="4" Text="{Binding TiempoTotal}"></TextBlock>
-                            <TextBlock Grid.Column="5" Text="{Binding Costo}"></TextBlock>
 
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-  </Grid>
+                <ListBox Name="lbReporte" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,84,10,77">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="190"/>
+                                    <ColumnDefinition Width="190"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Placa}"></TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding TipoVehiculo}"></TextBlock>
+                                <TextBlock Grid.Column="2" Text="{Binding HoraEntrada}"></TextBlock>
+                                <TextBlock Grid.Column="3" Text="{Binding HoraSalida}"></TextBlock>
+                                <TextBlock Grid.Column="4" Text="{Binding TiempoTotal}"></TextBlock>
+                                <TextBlock Grid.Column="5" Text="{Binding Costo}"></TextBlock>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label Content="Total Ingresos del dia:" HorizontalAlignment="Left" Margin="495,465,0,0" VerticalAlignment="Top" Width="151"/>
+                <ListBox Name="lbtotal"  HorizontalAlignment="Left" Height="32" Margin="648,460,0,0" VerticalAlignment="Top" Width="100">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="2">
+                                <TextBlock  Text="{Binding Total}"  />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
             <Button Content="Atrás" Foreground="Black" Background="#F9AA33" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Height="Auto" Width="75" Click="Atras_Click"/>
+            <Button Content="Reporte" Foreground="Black" Background="#F9AA33" HorizontalAlignment="Left" Margin="400,466,0,0" VerticalAlignment="Top" Height="Auto" Width="85" Click="total" />
         </Grid>
 
 

@@ -24,12 +24,19 @@ namespace Sistema_Parqueo
         {
             InitializeComponent();
             this.lbReporte.ItemsSource = estacionamiento.MostrarReporte();
+            
         }
 
         private void MostrarVehiculosDentro()
         {
             ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-            lbReporte.ItemsSource = estacionamiento.MostrarReporte();
+           
+        }
+
+        private void MostrarRTotal()
+        {
+            ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
+            lbtotal.ItemsSource = estacionamiento.Mostrartotal();
         }
 
         private void Salir(object sender, RoutedEventArgs e)
@@ -44,6 +51,11 @@ namespace Sistema_Parqueo
             MainWindow main = new MainWindow();
             this.Hide();
             main.Show();
+        }
+
+        private void total(object sender, RoutedEventArgs e)
+        {
+            this.lbtotal.ItemsSource = estacionamiento.Mostrartotal();
         }
     }
 }

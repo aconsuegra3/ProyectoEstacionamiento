@@ -17,6 +17,7 @@ namespace Sistema_Parqueo
         private string tipoVehiculo;
         private decimal costo;
         private int tiempoTotal;
+        private decimal total;
 
         SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
         public ClassEstacionamiento()
@@ -54,6 +55,11 @@ namespace Sistema_Parqueo
         {
             get { return tiempoTotal; }
             set { tiempoTotal = value; }
+        }
+        public decimal Total
+        {
+            get { return total; }
+            set { total = value; }
         }
 
 
@@ -245,6 +251,7 @@ namespace Sistema_Parqueo
         {
             cn.Open();
             string query = "SELECT * FROM Estacionamiento.Reporte ";
+
             SqlCommand comando = new SqlCommand(query, cn);
             List<ClassEstacionamiento> reporte = new List<ClassEstacionamiento>();
             SqlDataReader reder = comando.ExecuteReader();
@@ -266,9 +273,31 @@ namespace Sistema_Parqueo
             cn.Close();
             return reporte;
         }
-      
+
+        // Creacion de la lista Reporte de valor total
+        public List<ClassEstacionamiento> Mostrartotal()
+        {
+            cn.Open();
+            string query = "SELECT SUM (Costo) FROM Estacionamiento.Reporte ";
+
+            SqlCommand comando = new SqlCommand(query, cn);
+            List<ClassEstacionamiento> reporte = new List<ClassEstacionamiento>();
+            SqlDataReader reder = comando.ExecuteReader();
+
+            while (reder.Read())
+            {
+               
+                ClassEstacionamiento datoR = new ClassEstacionamiento();
+                datoR.Total = reder.GetDecimal(0);
+                reporte.Add(datoR);
+            }
+            reder.Close();
+            cn.Close();
+            return reporte;
+        }
+
         // Creacion de la lista mostrarMensaje
-         public List<ClassEstacionamiento> MostrarPago()
+        public List<ClassEstacionamiento> MostrarPago()
         {
             cn.Open();
             string query = " SELECT TOP 1 * FROM Estacionamiento.Reporte ORDER BY id DESC";
