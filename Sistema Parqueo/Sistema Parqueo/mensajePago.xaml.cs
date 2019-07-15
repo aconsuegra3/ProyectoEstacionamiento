@@ -19,10 +19,12 @@ namespace Sistema_Parqueo
     /// </summary>
     public partial class mensajePago : Window
     {
+        // Instancia de la Clase estacionamiento
         ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
         public mensajePago()
         {
             InitializeComponent();
+            // para que el listbox muestre al cargar la ventana
             this.lbpago.ItemsSource = estacionamiento.MostrarPago();
         }
 
@@ -32,9 +34,10 @@ namespace Sistema_Parqueo
             lbpago.ItemsSource = estacionamiento.MostrarPago();
         }
 
-     
+        // botón aceptar     
         private void Aceptar(object sender, RoutedEventArgs e)
         {
+            // se cierra (esconde) esta ventana al dar click al botón aceptar
             this.Hide();
         }
     }

@@ -20,12 +20,14 @@ namespace Sistema_Parqueo
         private decimal total;
 
         SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        // Constructor
         public ClassEstacionamiento()
         {
             placa = "PorDefecto";
             tipoVehiculo = "PorDefecto";
         }
 
+        // Propiedades de la clase
         public string Placa
         {
             get { return placa; }
@@ -103,8 +105,7 @@ namespace Sistema_Parqueo
             {
                 return true;
             }
-        }
-        
+        }        
 
         //Insertar vehiculo a la base de datos
         public void InsertarVehiculo()
@@ -143,7 +144,7 @@ namespace Sistema_Parqueo
                     SqlCommand comando = new SqlCommand(query, cn);
                     comando.Parameters.AddWithValue("@placa", Placa);
                     comando.ExecuteNonQuery();
-                    MessageBox.Show("Bienvenido");
+                    //MessageBox.Show("Bienvenido");
                     cn.Close();
                 }
                 catch (Exception )
@@ -158,12 +159,14 @@ namespace Sistema_Parqueo
 
         }
 
+        // Método usado cuando un carro se va
         public void SalidaVehiculo()
         {
           
             try
             {
                 cn.Open();
+                // actualiza la hora salida
                 string query = "UPDATE Estacionamiento.Detalle SET horaSalida=GETDATE() WHERE placaVehiculo =@placa";
                 SqlCommand comando = new SqlCommand(query, cn);
                 comando.Parameters.AddWithValue("@placa", Placa);
@@ -179,6 +182,7 @@ namespace Sistema_Parqueo
                  try
                  {
                      cn.Open();
+                    // Elimina el vehiculo de su tabla
                      string query = "DELETE FROM Estacionamiento.Detalle where PlacaVehiculo = @placa";
                      SqlCommand comando = new SqlCommand(query, cn);
                      comando.Parameters.AddWithValue("@placa", Placa);
@@ -192,10 +196,7 @@ namespace Sistema_Parqueo
                  }              
              }        
         }
-
         
-
-
         // Creacion de la lista mostrar
         public List<ClassEstacionamiento> MostrarEntrada()
         {
@@ -220,6 +221,7 @@ namespace Sistema_Parqueo
             return Lista;
         }
         
+        // lista para buscar por placa
         public List<ClassEstacionamiento> BuscarEntrada()
         {
             
@@ -323,4 +325,3 @@ namespace Sistema_Parqueo
 
     }
 }
-

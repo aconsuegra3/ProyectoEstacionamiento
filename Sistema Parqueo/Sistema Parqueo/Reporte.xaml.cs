@@ -46,6 +46,7 @@ namespace Sistema_Parqueo
             main.Show();
         }
 
+        // Botón atrás
         private void Atras_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = new MainWindow();
@@ -53,6 +54,7 @@ namespace Sistema_Parqueo
             main.Show();
         }
 
+        // Botón total, muestra los ingresos totales del reporte
         private void total(object sender, RoutedEventArgs e)
         {
             this.lbtotal.ItemsSource = estacionamiento.Mostrartotal();
