@@ -40,10 +40,10 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Placa}"></TextBlock>
-                                <TextBlock Grid.Column="1" Text="{Binding TipoVehiculo}"></TextBlock>
-                                <TextBlock Grid.Column="2" Text="{Binding TiempoTotal}"></TextBlock>
-                                <TextBlock Grid.Column="3" Text="{Binding Costo}"></TextBlock>
+                                <TextBlock Grid.Column="0" Text="{Binding Placa}" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding TipoVehiculo}" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Column="2" Text="{Binding TiempoTotal}" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Column="3" Text="{Binding Costo}" HorizontalAlignment="Center"></TextBlock>
 
                             </Grid>
                         </DataTemplate>
