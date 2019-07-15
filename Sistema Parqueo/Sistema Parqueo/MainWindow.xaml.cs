@@ -110,7 +110,7 @@ namespace Sistema_Parqueo
                 estacionamiento.Placa = txtBuscarPlaca.Text;
                 estacionamiento.SalidaVehiculo();
                 mensajePago ms = new mensajePago();
-                ms.Show();
+                ms.ShowDialog();
             }
             
             this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();           
