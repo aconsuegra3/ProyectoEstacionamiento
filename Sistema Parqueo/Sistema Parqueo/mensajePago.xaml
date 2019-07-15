@@ -23,14 +23,14 @@
         </Grid>
         <Grid Grid.Row="1">
 
-            <Label Content="Placa" Margin="64,19,407.2,84"/>
+            <Label Content="Placa" Margin="60,19,411.2,84"/>
             <Label Content="Tipo Vehiculo" Margin="161,20,265.2,84"/>
-            <Label Content="Tiempo/Horas" Margin="307,17,112.2,84"/>
-            <Label Content="Total" Margin="439,19,26.2,84"/>
+            <Label Content="Tiempo/Horas" Margin="294,17,125.2,84"/>
+            <Label Content="Total" Margin="435,19,30.2,84"/>
 
             <Grid>
 
-                <ListBox Name="lbpago" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,46,10.2,42">
+                <ListBox  Name="lbpago" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,46,10.2,42">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="2">
@@ -40,10 +40,10 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Placa}"></TextBlock>
-                                <TextBlock Grid.Column="1" Text="{Binding TipoVehiculo}"></TextBlock>
-                                <TextBlock Grid.Column="2" Text="{Binding TiempoTotal}"></TextBlock>
-                                <TextBlock Grid.Column="3" Text="{Binding Costo}"></TextBlock>
+                                <TextBlock TextAlignment="Center" Grid.Column="0" Text="{Binding Placa}"></TextBlock>
+                                <TextBlock TextAlignment="Center" Grid.Column="1" Text="{Binding TipoVehiculo}"></TextBlock>
+                                <TextBlock TextAlignment="Center" Grid.Column="2" Text="{Binding TiempoTotal}"></TextBlock>
+                                <TextBlock TextAlignment="Center" Grid.Column="3" Text="{Binding Costo}"></TextBlock>
 
                             </Grid>
                         </DataTemplate>

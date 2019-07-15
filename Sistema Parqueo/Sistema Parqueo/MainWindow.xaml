@@ -59,8 +59,8 @@
                             <ComboBoxItem Name="Motocicleta">Motocicleta</ComboBoxItem>
                             <ComboBoxItem Name="Otros">Otros</ComboBoxItem>
                         </ComboBox>
-                        <Button Name="btnSalir" Background="#F9AA33" Foreground="Black" Content="Aceptar" HorizontalAlignment="Left" Margin="89,151,0,0" VerticalAlignment="Top" Width="91" Height="33" Click="Aceptar"/>
-                        <Button x:Name="btnCancelar" Background="#F9AA33" Foreground="Black" Content="Cancelar" HorizontalAlignment="Left" Margin="249,151,0,0" VerticalAlignment="Top" Width="91" Height="33" Click="Cancelar"/>
+                        <Button Name="btnSalir" Background="#F9AA33" Foreground="Black" Content="Aceptar" HorizontalAlignment="Left" Margin="89,143,0,0" VerticalAlignment="Top" Width="91" Height="33" Click="Aceptar"/>
+                        <Button x:Name="btnCancelar" Background="#F9AA33" Foreground="Black" Content="Cancelar" HorizontalAlignment="Left" Margin="249,143,0,0" VerticalAlignment="Top" Width="91" Height="33" Click="Cancelar"/>
 
 
 
@@ -125,11 +125,11 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label FontFamily="Work Sans" Grid.Column="0" Content="Placa" HorizontalAlignment="Center"/>
-                            <Label FontFamily="Work Sans" Grid.Column="1" Content="Tipo Vehiculo" HorizontalAlignment="Center"/>
-                            <Label FontFamily="Work Sans" Grid.Column="2" Content="Hora de Entrada" HorizontalAlignment="Center"/>
+                            <Label FontFamily="Work Sans" Grid.Column="0" Content="Placa" HorizontalAlignment="Center" Margin="28,16,28,-16.2"/>
+                            <Label FontFamily="Work Sans" Grid.Column="1" Content="Tipo Vehiculo" HorizontalAlignment="Center" Margin="32,16,32,-16.2"/>
+                            <Label FontFamily="Work Sans" Grid.Column="2" Content="Hora de Entrada" HorizontalAlignment="Center" Margin="23,10,23,-10.2"/>
                         </Grid>
-                        <ListBox Name="lbVehiculosEstacionamiento" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,26,10,10">
+                        <ListBox Name="lbVehiculosEstacionamiento" HorizontalContentAlignment="Stretch" Background="Gainsboro" Margin="10,38,10,13.8">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="2">
@@ -140,7 +140,7 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding Placa}"></TextBlock>
                                         <TextBlock Grid.Column="1" Text="{Binding TipoVehiculo}"></TextBlock>
-                                        <TextBlock Grid.Column="2" Text="{Binding HoraEntrada}"></TextBlock>
+                                        <TextBlock TextAlignment="Center" Grid.Column="2" Text="{Binding HoraEntrada}"></TextBlock>
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
