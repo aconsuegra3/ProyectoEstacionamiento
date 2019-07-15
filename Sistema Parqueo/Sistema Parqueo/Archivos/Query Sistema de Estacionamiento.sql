@@ -1,9 +1,9 @@
 -- Creación de la tabla Vehículo-- BASE DE DATOS ESTACIONAMIENTO --
 -- Creado por: Abel Consuegra y Luis Rivera --
 
+
 USE tempdb
 GO
-
 
 CREATE DATABASE SistemaDeEstacionamiento
 GO
@@ -94,7 +94,7 @@ if(@TiempoTotal) >= 4  BEGIN
 	set @costo=15*@TiempoTotal
 END
 if(@TipoVehiculo) = 'Camion' or (@TipoVehiculo) = 'Bus' or (@TipoVehiculo) = 'Rastra' BEGIN
-	UPDATE Estacionamiento.Reporte
+	
 	set @costo= @costo*2
 	END
 	if(@TipoVehiculo) = 'Motocicleta' or (@TipoVehiculo) = 'Otros' BEGIN
