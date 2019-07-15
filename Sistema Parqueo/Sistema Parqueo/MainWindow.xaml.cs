@@ -104,12 +104,14 @@ namespace Sistema_Parqueo
                 MessageBox.Show("Debes seleccionar un Vehiculo");
             else
             {
+                mensajePago ms = new mensajePago();
+                ms.Show();
                 ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
                 estacionamiento.Placa = txtBuscarPlaca.Text;
                 estacionamiento.SalidaVehiculo();
-                MessageBox.Show("Gracias por su visita");
+
             }
-            //CalcularPago();
+            
             this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();           
             txtBuscarPlaca.Text = String.Empty;
             lbVehiculosEstacionamiento.ItemsSource = "";

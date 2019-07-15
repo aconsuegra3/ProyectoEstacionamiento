@@ -154,6 +154,7 @@ namespace Sistema_Parqueo
 
         public void SalidaVehiculo()
         {
+          
             try
             {
                 cn.Open();
@@ -260,6 +261,30 @@ namespace Sistema_Parqueo
 
                 // lbVehiculosDentroEstacionamiento.SelectedValuePath = "Placa";
                 reporte.Add(datoR);
+            }
+            reder.Close();
+            cn.Close();
+            return reporte;
+        }
+
+        // Creacion de la lista mostrarMensaje
+        public List<ClassEstacionamiento> MostrarMensaje()
+        {
+            cn.Open();
+            string query = "SELECT Placa,TipoVehiculo, TiempoTotal, Costo FROM Estacionamiento.Reporte Where Placa = @placa ";
+            SqlCommand comando = new SqlCommand(query, cn);
+            comando.Parameters.AddWithValue("@placa", Placa);
+            List<ClassEstacionamiento> reporte = new List<ClassEstacionamiento>();
+            SqlDataReader reder = comando.ExecuteReader();
+
+            while (reder.Read())
+            {
+                ClassEstacionamiento dato = new ClassEstacionamiento();
+                dato.Placa = reder.GetString(0);
+                dato.TipoVehiculo = reder.GetString(1);
+                dato.TiempoTotal = reder.GetInt32(2);
+                dato.Costo = reder.GetDecimal(3);
+                reporte.Add(dato);
             }
             reder.Close();
             cn.Close();
