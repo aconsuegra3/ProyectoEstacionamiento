@@ -24,7 +24,7 @@ namespace Sistema_Parqueo
     public partial class MainWindow : Window
     {
         ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
-        SqlConnection cn = new SqlConnection("Data Source = LAPTOP-H5OOPDVV\\SQLEXPRESS; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
+        SqlConnection cn = new SqlConnection("Data Source = ABELCONSUEGRA; Initial Catalog = SistemaDeEstacionamiento; Integrated Security = True");
 
         public MainWindow()
         {
@@ -105,11 +105,11 @@ namespace Sistema_Parqueo
             else
             {
                 mensajePago ms = new mensajePago();
-                ms.Show();
+                ms.ShowDialog();
                 ClassEstacionamiento estacionamiento = new ClassEstacionamiento();
                 estacionamiento.Placa = txtBuscarPlaca.Text;
                 estacionamiento.SalidaVehiculo();
-
+                
             }
             
             this.lbVehiculosDentroEstacionamiento.ItemsSource = estacionamiento.MostrarEntrada();           
